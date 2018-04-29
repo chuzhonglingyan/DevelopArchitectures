@@ -1,0 +1,1 @@
+include ':app', ':mvpexample', ':mvvmexample', ':baselibs', ':dragger2databinding'
