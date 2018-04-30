@@ -8,7 +8,7 @@ import com.yuntian.dragger2databinding.ui.user.bean.TokenBean;
 import com.yuntian.dragger2databinding.ui.user.bean.UserInfoBean;
 
 /**
- * description P extends BasePresenter .
+ * description 适配类 .
  * Created by ChuYingYan on 2018/4/29.
  */
 public  abstract class UserViewActivity<B extends ViewDataBinding,P extends BasePresenter> extends BaseMvpActivity<P, B>  implements UserContract.View {
