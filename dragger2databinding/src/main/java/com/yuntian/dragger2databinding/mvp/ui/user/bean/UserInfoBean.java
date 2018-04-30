@@ -1,4 +1,4 @@
-package com.yuntian.dragger2databinding.ui.user.bean;
+package com.yuntian.dragger2databinding.mvp.ui.user.bean;
 
 /**
  * @author guangleilei

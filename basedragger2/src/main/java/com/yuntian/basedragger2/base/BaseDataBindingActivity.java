@@ -22,4 +22,8 @@ public abstract class BaseDataBindingActivity<B extends ViewDataBinding> extends
     }
 
 
+    public B getmViewBinding() {
+        return mViewBinding;
+    }
+
 }

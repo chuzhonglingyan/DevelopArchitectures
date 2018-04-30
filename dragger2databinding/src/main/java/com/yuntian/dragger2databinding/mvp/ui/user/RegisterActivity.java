@@ -1,4 +1,4 @@
-package com.yuntian.dragger2databinding.ui.user;
+package com.yuntian.dragger2databinding.mvp.ui.user;
 
 import android.os.Bundle;
 
@@ -6,11 +6,11 @@ import com.yuntian.basedragger2.inject.AppComponent;
 import com.yuntian.dragger2databinding.R;
 import com.yuntian.dragger2databinding.databinding.ActivityRegisterBinding;
 import com.yuntian.dragger2databinding.net.entity.RegisterParam;
-import com.yuntian.dragger2databinding.ui.user.bean.TokenBean;
-import com.yuntian.dragger2databinding.ui.user.inject.DaggerUserComponent;
-import com.yuntian.dragger2databinding.ui.user.inject.UserModule;
-import com.yuntian.dragger2databinding.ui.user.mvp.UserContract;
-import com.yuntian.dragger2databinding.ui.user.mvp.UserViewActivity;
+import com.yuntian.dragger2databinding.mvp.ui.user.bean.TokenBean;
+import com.yuntian.dragger2databinding.mvp.ui.user.inject.DaggerUserComponent;
+import com.yuntian.dragger2databinding.mvp.ui.user.inject.UserModule;
+import com.yuntian.dragger2databinding.mvp.ui.user.mvp.UserContract;
+import com.yuntian.dragger2databinding.mvp.ui.user.mvp.UserViewActivity;
 
 public class RegisterActivity extends UserViewActivity<ActivityRegisterBinding,UserContract.Presenter> {
 

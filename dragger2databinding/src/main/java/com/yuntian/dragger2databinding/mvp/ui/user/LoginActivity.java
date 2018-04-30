@@ -1,4 +1,4 @@
-package com.yuntian.dragger2databinding.ui.user;
+package com.yuntian.dragger2databinding.mvp.ui.user;
 
 import android.app.Application;
 import android.os.Bundle;
@@ -8,11 +8,11 @@ import com.yuntian.basedragger2.inject.AppComponent;
 import com.yuntian.dragger2databinding.R;
 import com.yuntian.dragger2databinding.databinding.ActivityLoginBinding;
 import com.yuntian.dragger2databinding.net.entity.LoginPsdParam;
-import com.yuntian.dragger2databinding.ui.user.bean.TokenBean;
-import com.yuntian.dragger2databinding.ui.user.inject.DaggerUserComponent;
-import com.yuntian.dragger2databinding.ui.user.inject.UserModule;
-import com.yuntian.dragger2databinding.ui.user.mvp.UserContract;
-import com.yuntian.dragger2databinding.ui.user.mvp.UserViewActivity;
+import com.yuntian.dragger2databinding.mvp.ui.user.bean.TokenBean;
+import com.yuntian.dragger2databinding.mvp.ui.user.inject.DaggerUserComponent;
+import com.yuntian.dragger2databinding.mvp.ui.user.inject.UserModule;
+import com.yuntian.dragger2databinding.mvp.ui.user.mvp.UserContract;
+import com.yuntian.dragger2databinding.mvp.ui.user.mvp.UserViewActivity;
 
 import javax.inject.Inject;
 

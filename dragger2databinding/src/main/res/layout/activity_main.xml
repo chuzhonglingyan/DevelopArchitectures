@@ -20,5 +20,18 @@
         android:background="@android:color/holo_blue_bright"
         android:layout_gravity="center_horizontal"
        />
+
+        <TextView
+            android:id="@+id/goto_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获得用户信息"
+            android:textSize="14sp"
+            android:textColor="@android:color/white"
+            android:padding="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/holo_blue_bright"
+            android:layout_gravity="center_horizontal"
+            />
     </LinearLayout>
 </layout>

@@ -1,11 +1,11 @@
-package com.yuntian.dragger2databinding.ui.user.mvp;
+package com.yuntian.dragger2databinding.mvp.ui.user.mvp;
 
 import android.databinding.ViewDataBinding;
 
 import com.yuntian.basedragger2.base.BaseMvpActivity;
 import com.yuntian.basedragger2.mvp.BasePresenter;
-import com.yuntian.dragger2databinding.ui.user.bean.TokenBean;
-import com.yuntian.dragger2databinding.ui.user.bean.UserInfoBean;
+import com.yuntian.dragger2databinding.mvp.ui.user.bean.TokenBean;
+import com.yuntian.dragger2databinding.mvp.ui.user.bean.UserInfoBean;
 
 /**
  * description 适配类 .

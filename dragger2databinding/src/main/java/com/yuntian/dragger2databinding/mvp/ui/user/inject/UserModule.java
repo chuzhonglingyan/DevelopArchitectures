@@ -1,10 +1,10 @@
-package com.yuntian.dragger2databinding.ui.user.inject;
+package com.yuntian.dragger2databinding.mvp.ui.user.inject;
 
 
 import com.yuntian.basedragger2.scope.ActivityScope;
-import com.yuntian.dragger2databinding.ui.user.mvp.UserContract;
-import com.yuntian.dragger2databinding.ui.user.mvp.UserModel;
-import com.yuntian.dragger2databinding.ui.user.mvp.UserPresenter;
+import com.yuntian.dragger2databinding.mvp.ui.user.mvp.UserContract;
+import com.yuntian.dragger2databinding.mvp.ui.user.mvp.UserModel;
+import com.yuntian.dragger2databinding.mvp.ui.user.mvp.UserPresenter;
 
 import dagger.Module;
 import dagger.Provides;

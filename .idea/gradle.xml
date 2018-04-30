@@ -8,8 +8,6 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/MvpExample" />
-            <option value="$PROJECT_DIR$/MvvmExample" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/basedragger2" />
             <option value="$PROJECT_DIR$/baselibs" />
