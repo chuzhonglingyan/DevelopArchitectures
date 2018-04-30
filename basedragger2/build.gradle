@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -6,7 +6,6 @@ android {
 
 
     defaultConfig {
-        applicationId "com.yuntian.dragger2databinding"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -28,20 +27,13 @@ android {
     }
 
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "com.android.support.constraint:constraint-layout:${rootProject.ext.constraintLayoutVersion}"
-    androidTestImplementation "com.android.support.test:runner:${rootProject.ext.testRunnerVersion}"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.ext.espressoVersion}"
-    testImplementation "junit:junit:${rootProject.ext.junitVersion}"
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    implementation project(':basedragger2')
+
+    api project(':baselibs')
 
     implementation "com.google.dagger:dagger:${rootProject.ext.dagger}"
     annotationProcessor "com.google.dagger:dagger-compiler:${rootProject.ext.dagger}"

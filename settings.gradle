@@ -1,1 +1,1 @@
-include ':app', ':mvpexample', ':mvvmexample', ':baselibs', ':dragger2databinding'
+include ':app', ':mvpexample', ':mvvmexample', ':baselibs', ':dragger2databinding', ':basedragger2'
