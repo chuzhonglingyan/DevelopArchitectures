@@ -6,7 +6,7 @@
 
     <data>
         <variable
-            name="mode"
+            name="model"
             type="com.yuntian.dragger2databinding.mvvm.ui.mode.UserViewModel" />
     </data>
 
@@ -21,11 +21,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
+            android:onClick="@{model.onItemClick}"
+            android:text="@{`My name is `+  model.user.name}"
             tools:text="哈哈"
             android:textColor="@color/colorPrimary"
             />
-            <!--android:text="@{`My name is `+  model.mMode.name}"-->
-            <!--android:onClick="@{model.onItemClick}"-->
 
 
         <TextView
@@ -34,8 +34,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
+            android:text="@{`I'm   `+model.user.age+`  years old `}"
             tools:text="哈哈"
             />
-            <!--android:text="@{`I'm   `+model.mMode.age+`  years old `}"-->
+
     </LinearLayout>
 </layout>

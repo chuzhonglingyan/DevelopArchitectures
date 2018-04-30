@@ -1,22 +1,27 @@
 package com.yuntian.dragger2databinding.mvvm.ui.mode;
 
+import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.ObservableField;
-import android.databinding.ObservableInt;
 import android.view.View;
 import android.widget.Toast;
+
+import com.android.databinding.library.baseAdapters.BR;
+
 
 /**
  * description  .
  * Created by ChuYingYan on 2018/4/30.
  */
-public class UserMode  implements IMode {
+public class UserMode extends BaseObservable implements IModeData {
 
 
     public ObservableField<String> name = new ObservableField<>();
-    public ObservableInt age = new ObservableInt();
 
-    public UserMode(String pName, int pAge) {
+    public ObservableField<String> age = new ObservableField<>();
+
+
+    public UserMode(String pName, String pAge) {
         name.set(pName);
         age.set(pAge);
     }
@@ -28,22 +33,24 @@ public class UserMode  implements IMode {
 
     public void setName(String name) {
         this.name.set(name);
-        //notifyPropertyChanged(mvvm.wangjing.com.mvvm.BR.name);
+        notifyPropertyChanged(BR.name);
     }
 
     @Bindable
-    public int getAge() {
+    public String getAge() {
         return age.get();
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age.set(age);
+        notifyPropertyChanged(BR.age);
     }
 
     public void onItemClick(View pView) {
         Toast.makeText(pView.getContext(), name.get(), Toast.LENGTH_SHORT).show();
         setName("June");
     }
+
 
 
 }
