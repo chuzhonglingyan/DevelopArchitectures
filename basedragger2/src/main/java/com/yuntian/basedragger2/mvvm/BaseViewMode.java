@@ -1,6 +1,8 @@
-package com.yuntian.dragger2databinding.mvvm.ui.mode;
+package com.yuntian.basedragger2.mvvm;
 
 import android.databinding.ViewDataBinding;
+
+import javax.inject.Inject;
 
 /**
  * description  .
@@ -8,12 +10,23 @@ import android.databinding.ViewDataBinding;
  */
 public abstract class BaseViewMode<B extends ViewDataBinding>  implements ViewModel{
 
+    @Inject
     public B mBingding;
 
-    public BaseViewMode(B mBingding) {
-        this.mBingding = mBingding;
+
+    public abstract  void  initData();
+
+
+    @Override
+    public  void onAttach() {
         initData();
     }
 
-    abstract  void  initData();
+
+    @Override
+    public void onDetach() {
+
+    }
+
+
 }

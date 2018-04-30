@@ -3,17 +3,20 @@ package com.yuntian.dragger2databinding.mvvm.ui.mode;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.ObservableField;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
 import com.android.databinding.library.baseAdapters.BR;
+import com.yuntian.basedragger2.mvvm.IModeData;
+import com.yuntian.dragger2databinding.mvvm.ui.bean.UserBean;
 
 
 /**
- * description  .
+ * description  数据model.
  * Created by ChuYingYan on 2018/4/30.
  */
-public class UserMode extends BaseObservable implements IModeData {
+public class UserModel extends BaseObservable implements IModeData {
 
 
     public ObservableField<String> name = new ObservableField<>();
@@ -21,10 +24,10 @@ public class UserMode extends BaseObservable implements IModeData {
     public ObservableField<String> age = new ObservableField<>();
 
 
-    public UserMode(String pName, String pAge) {
-        name.set(pName);
-        age.set(pAge);
+    public UserModel() {
     }
+
+
 
     @Bindable
     public String getName() {
@@ -52,5 +55,16 @@ public class UserMode extends BaseObservable implements IModeData {
     }
 
 
+
+    private Handler handler=new Handler();
+
+
+    public void  requestNetData(){
+        handler.postDelayed(()->{
+                UserBean userBean=new UserBean("cheng",20);
+                setName(userBean.getName());
+                setAge(String.valueOf(userBean.getAge()));
+        },2000);
+    }
 
 }

@@ -1,7 +1,5 @@
 package com.yuntian.basedragger2.mvp;
 
-import android.content.Context;
-
 import javax.inject.Inject;
 
 /**
@@ -17,25 +15,14 @@ public abstract class BasePresenter<M extends BaseModel, V extends BaseView> imp
     @Inject
     protected V mView;
 
-    protected Context mContext;
 
     public BasePresenter() {
 
     }
 
 
-    public Context  getContext(){
-        if (mView instanceof Context){
-            return (Context) mView;
-        }
-        return  null;
-    }
-
-
-
     @Override
     public void onCreate() {
-        mContext=getContext();
     }
 
     @Override

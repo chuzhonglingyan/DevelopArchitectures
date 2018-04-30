@@ -3,32 +3,34 @@ package com.yuntian.dragger2databinding.mvvm.ui.mode;
 import android.view.View;
 import android.widget.Toast;
 
+import com.yuntian.basedragger2.mvvm.BaseViewMode;
 import com.yuntian.dragger2databinding.databinding.ActivityUserViewmodeBinding;
+
+import javax.inject.Inject;
 
 
 /**
  * description  .
  * Created by ChuYingYan on 2018/4/30.
  */
-public class UserViewModel extends BaseViewMode<ActivityUserViewmodeBinding>{
+public class UserViewModel extends BaseViewMode<ActivityUserViewmodeBinding> {
 
 
     //注意，这里都需要定义成public，否则这个字段读取不到
 
-    public UserMode user;
+    public UserModel user;
 
-    public UserViewModel(ActivityUserViewmodeBinding mBingding) {
-        super(mBingding);
+    @Inject
+    public UserViewModel() {
     }
 
 
     @Override
-    void initData() {
+    public void initData() {
         mBingding.setModel(this);
-        user=new UserMode("LooperJing","20");
+        user=new UserModel();
+        user.requestNetData();
     }
-
-
 
 
     public void onItemClick(View pView) {
@@ -37,13 +39,4 @@ public class UserViewModel extends BaseViewMode<ActivityUserViewmodeBinding>{
     }
 
 
-    @Override
-    public void onAttach() {
-
-    }
-
-    @Override
-    public void onDetach() {
-
-    }
 }

@@ -1,12 +1,13 @@
-package com.yuntian.dragger2databinding.mvvm.ui.mode;
+package com.yuntian.basedragger2.mvvm;
 
 /**
  * description  .
  * Created by ChuYingYan on 2018/4/30.
  */
-public interface ViewModel {
+public interface ViewModel{
 
     void onAttach();
+
     void onDetach();
 
 }
