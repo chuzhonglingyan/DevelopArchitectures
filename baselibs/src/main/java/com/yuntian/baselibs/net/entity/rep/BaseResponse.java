@@ -25,7 +25,13 @@ public  class BaseResponse<T> {
         return 99 == code||!error;
     }
 
+    public boolean isError() {
+        return error;
+    }
 
+    public void setError(boolean error) {
+        this.error = error;
+    }
 
     public int getCode() {
         return code;
