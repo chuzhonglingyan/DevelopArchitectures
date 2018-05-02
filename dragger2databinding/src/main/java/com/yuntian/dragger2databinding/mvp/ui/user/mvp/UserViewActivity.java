@@ -11,7 +11,7 @@ import com.yuntian.dragger2databinding.mvp.ui.user.bean.UserInfoBean;
  * description 适配类 .
  * Created by ChuYingYan on 2018/4/29.
  */
-public  abstract class UserViewActivity<B extends ViewDataBinding,P extends BasePresenter> extends BaseMvpActivity<P, B>  implements UserContract.View {
+public abstract class UserViewActivity<B extends ViewDataBinding,P extends BasePresenter> extends BaseMvpActivity<P, B>  implements UserContract.View {
 
 
     @Override
@@ -33,7 +33,6 @@ public  abstract class UserViewActivity<B extends ViewDataBinding,P extends Base
     public void showMsg() {
 
     }
-
 
 
 

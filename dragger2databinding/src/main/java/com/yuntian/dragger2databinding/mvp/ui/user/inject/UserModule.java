@@ -8,7 +8,10 @@ import com.yuntian.dragger2databinding.mvp.ui.user.mvp.UserPresenter;
 
 import dagger.Module;
 import dagger.Provides;
-
+/**
+ * description .
+ * Created by ChuYingYan on 2018/5/1.
+ */
 @Module
 public class UserModule {
     private UserContract.View view;

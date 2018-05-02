@@ -8,6 +8,10 @@ import com.yuntian.dragger2databinding.mvp.ui.user.RegisterActivity;
 
 import dagger.Component;
 
+/**
+ * description .
+ * Created by ChuYingYan on 2018/5/1.
+ */
 @ActivityScope
 @Component(modules = UserModule.class, dependencies = AppComponent.class)
 public interface UserComponent {

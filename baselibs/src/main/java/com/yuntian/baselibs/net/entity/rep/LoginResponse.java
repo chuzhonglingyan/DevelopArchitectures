@@ -1,10 +1,10 @@
-package com.yuntian.dragger2databinding.mvp.ui.user.bean;
+package com.yuntian.baselibs.net.entity.rep;
 
 /**
- * description .
- * Created by ChuYingYan on 2018/5/1.
+ * @author guangleilei
+ * @version 1.0 2017-04-01
  */
-public class TokenBean {
+public class LoginResponse {
 
     private String memberId;
     private String token;
@@ -23,14 +23,5 @@ public class TokenBean {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-
-    @Override
-    public String toString() {
-        return "TokenBean{" +
-                "memberId='" + memberId + '\'' +
-                ", token='" + token + '\'' +
-                '}';
     }
 }

@@ -1,8 +1,9 @@
 package com.yuntian.basedragger2.mvp;
 
+
 /**
- * @author guangleilei
- * @version 1.0 2017-03-30
+ * description .
+ * Created by ChuYingYan on 2018/5/1.
  */
 public interface BaseView {
 

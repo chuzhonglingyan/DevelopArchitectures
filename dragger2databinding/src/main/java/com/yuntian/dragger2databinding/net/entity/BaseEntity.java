@@ -1,8 +1,8 @@
 package com.yuntian.dragger2databinding.net.entity;
 
 /**
- * @author guangleilei
- * @version 1.0 2017-04-01
+ * description .
+ * Created by ChuYingYan on 2018/5/1.
  */
 public class BaseEntity {
 

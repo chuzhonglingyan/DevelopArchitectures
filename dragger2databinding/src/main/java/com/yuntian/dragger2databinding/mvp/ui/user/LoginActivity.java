@@ -5,18 +5,25 @@ import android.os.Bundle;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.yuntian.basedragger2.inject.AppComponent;
+import com.yuntian.baselibs.net.core.ApiManager;
+import com.yuntian.baselibs.net.entity.rep.NewsBean;
+import com.yuntian.baselibs.net.result.CustomObserver;
+import com.yuntian.baselibs.net.service.NewsService;
+import com.yuntian.baselibs.rx.RxHandleResult;
 import com.yuntian.dragger2databinding.R;
 import com.yuntian.dragger2databinding.databinding.ActivityLoginBinding;
-import com.yuntian.dragger2databinding.net.entity.LoginPsdParam;
 import com.yuntian.dragger2databinding.mvp.ui.user.bean.TokenBean;
 import com.yuntian.dragger2databinding.mvp.ui.user.inject.DaggerUserComponent;
 import com.yuntian.dragger2databinding.mvp.ui.user.inject.UserModule;
 import com.yuntian.dragger2databinding.mvp.ui.user.mvp.UserContract;
 import com.yuntian.dragger2databinding.mvp.ui.user.mvp.UserViewActivity;
+import com.yuntian.dragger2databinding.net.entity.LoginPsdParam;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
-public class LoginActivity extends UserViewActivity<ActivityLoginBinding,UserContract.Presenter> {
+public class LoginActivity extends UserViewActivity<ActivityLoginBinding, UserContract.Presenter> {
 
 
     @Inject
@@ -41,11 +48,29 @@ public class LoginActivity extends UserViewActivity<ActivityLoginBinding,UserCon
             mPresenter.login(loginPsdParam);
         });
 
-        if(draggerApp!=null){
-            LogUtils.d("draggerApp:"+draggerApp.toString());
+        if (draggerApp != null) {
+            LogUtils.d("draggerApp:" + draggerApp.toString());
         }
-
+        testApi();
     }
+
+    public void testApi() {
+        NewsService newsService = ApiManager.getApi().create(NewsService.class);
+        newsService.getNewsList("1")
+                .compose(RxHandleResult.handleResult())
+                .subscribe(new CustomObserver<List<NewsBean>>() {
+
+                    @Override
+                    protected void _onNext(List<NewsBean> newsBeans) {
+                        LogUtils.d("当前线程" + Thread.currentThread().getName() + ":" + newsBeans.toString());
+                    }
+
+                    @Override
+                    protected void _onError(String message, int code) {
+                    }
+                });
+    }
+
 
     @Override
     public void showMsg() {
@@ -55,7 +80,7 @@ public class LoginActivity extends UserViewActivity<ActivityLoginBinding,UserCon
     @Override
     public void loginSuccess(TokenBean result) {
         super.loginSuccess(result);
-        LogUtils.d("登录结果:"+result.toString());
+        LogUtils.d("登录结果:" + result.toString());
     }
 
     @Override

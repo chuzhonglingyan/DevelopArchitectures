@@ -1,29 +1,11 @@
 package com.yuntian.dragger2databinding.mvp.ui.user.bean;
 
 /**
- * @author guangleilei
- * @version 1.0 2017-04-01
+ * description .
+ * Created by ChuYingYan on 2018/5/1.
  */
 public class UserInfoBean {
 
-    /**
-     * age : 200
-     * createUserId : 0
-     * delFlg : 0
-     * genderCode : 1
-     * headUrl : def
-     * id : 1
-     * memberId : 1
-     * mobile : 15827544776
-     * nickName : 卧槽
-     * realName : ren
-     * sex : 女
-     * ucId : 65202
-     * ucenterId : 65202
-     * updateUserId : 0
-     * userName : ren
-     * userStatus : 0
-     */
     private String age;
     private String genderCode;
     private String headUrl;

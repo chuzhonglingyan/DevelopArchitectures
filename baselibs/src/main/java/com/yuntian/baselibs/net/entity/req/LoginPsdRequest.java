@@ -1,13 +1,15 @@
-package com.yuntian.dragger2databinding.net.entity;
+package com.yuntian.baselibs.net.entity.req;
 
 /**
- * description .
- * Created by ChuYingYan on 2018/5/1.
+ * @author guangleilei
+ * @version 1.0 2017-04-01
  */
-public class LoginPsdParam extends BaseEntity {
+public class LoginPsdRequest extends BaseRequest {
 
 
 
+
+    private String token;
     private String mobile;
     private String password;
     private String verifyCode;
@@ -34,5 +36,14 @@ public class LoginPsdParam extends BaseEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
