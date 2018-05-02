@@ -51,8 +51,12 @@ public abstract   class CustomObserver<T> implements Observer<T> {
         } else {
             ErrorMsg errorMsg = new ErrorMsg();
             errorMsg.handleException(e);
-            LogUtils.e("msg=" + errorMsg.getError() + ",code" + errorMsg.getCode());
-            _onError(errorMsg.getError(),errorMsg.getCode());
+            if (errorMsg.getCode()==ErrorMsg.ERR_NULL){
+                _onNext(null);
+            }else {
+                LogUtils.e("msg=" + errorMsg.getError() + ",code" + errorMsg.getCode());
+                _onError(errorMsg.getError(),errorMsg.getCode());
+            }
         }
     }
 

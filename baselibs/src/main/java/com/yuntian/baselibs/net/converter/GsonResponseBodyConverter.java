@@ -41,7 +41,7 @@ public class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
         try {
             JSONObject jsonObject = new JSONObject(response);
             if (jsonObject.has("data")) {
-                String dataStr = jsonObject.toString();
+                String dataStr = jsonObject.get("data").toString();
                 if (TextUtils.isEmpty(dataStr)) {
                     jsonObject.remove("data");
                     response = jsonObject.toString();

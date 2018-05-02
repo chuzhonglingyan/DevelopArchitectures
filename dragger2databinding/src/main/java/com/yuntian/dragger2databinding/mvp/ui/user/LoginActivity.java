@@ -51,7 +51,8 @@ public class LoginActivity extends UserViewActivity<ActivityLoginBinding, UserCo
         if (draggerApp != null) {
             LogUtils.d("draggerApp:" + draggerApp.toString());
         }
-        testApi();
+        //testApi();
+        testApi2();
     }
 
     public void testApi() {
@@ -71,6 +72,25 @@ public class LoginActivity extends UserViewActivity<ActivityLoginBinding, UserCo
                 });
     }
 
+    public void testApi2() {
+        NewsService newsService = ApiManager.getApi().create(NewsService.class);
+        newsService.getNewsListA()
+                .compose(RxHandleResult.handleResult())
+                .subscribe(new CustomObserver<List<NewsBean>>() {
+
+                    @Override
+                    protected void _onNext(List<NewsBean> newsBeans) {
+                        if (newsBeans!=null){
+                            LogUtils.d("当前线程" + Thread.currentThread().getName() + ":" + newsBeans.toString());
+                        }
+                        LogUtils.d("当前线程" + Thread.currentThread().getName() + ":" + newsBeans);
+                    }
+
+                    @Override
+                    protected void _onError(String message, int code) {
+                    }
+                });
+    }
 
     @Override
     public void showMsg() {

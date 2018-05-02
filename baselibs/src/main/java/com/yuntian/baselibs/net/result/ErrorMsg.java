@@ -17,6 +17,8 @@ public class ErrorMsg {
     private String error = "";
     private int code;
 
+    public static final int ERR_NULL=10000;
+
     public String getError() {
         return error;
     }

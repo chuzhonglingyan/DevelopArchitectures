@@ -20,4 +20,7 @@ public interface NewsService {
     @GET("http://gank.io/api/data/Android/10/{pageSize}")
     Observable<BaseResponse<List<NewsBean>>> getNewsList(@Path("pageSize") String pageSize);
 
+    //获取新闻
+    @GET("http://192.168.1.105:5638/user") //http://10.0.2.2:5638/user
+    Observable<BaseResponse<List<NewsBean>>> getNewsListA();
 }

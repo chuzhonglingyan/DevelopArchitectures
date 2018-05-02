@@ -2,6 +2,7 @@ package com.yuntian.baselibs.rx;
 
 
 import com.yuntian.baselibs.net.entity.rep.BaseResponse;
+import com.yuntian.baselibs.net.result.ErrorMsg;
 import com.yuntian.baselibs.net.result.ServerException;
 
 import io.reactivex.Observable;
@@ -88,14 +89,19 @@ public class RxHandleResult {
             @Override
             public void subscribe(ObservableEmitter<T> emitter) throws Exception {
                 try {
-                    emitter.onNext(data);
-                    emitter.onComplete();
+                    if (data!=null){
+                        emitter.onNext(data);
+                        emitter.onComplete();
+                    }else {
+                        emitter.onError(new ServerException("对象为空", ErrorMsg.ERR_NULL));
+                    }
                 } catch (Exception e) {
                     emitter.onError(e);
                 }
             }
         });
     }
+
 
 
 }

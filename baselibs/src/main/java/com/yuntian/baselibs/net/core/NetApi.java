@@ -3,6 +3,7 @@ package com.yuntian.baselibs.net.core;
 
 import com.yuntian.baselibs.BuildConfig;
 import com.yuntian.baselibs.net.constant.URLConstant;
+import com.yuntian.baselibs.net.converter.CustomerConverter;
 import com.yuntian.baselibs.util.HttpsUtils;
 
 import java.io.IOException;
@@ -15,7 +16,6 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -66,7 +66,7 @@ public class NetApi {
 
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(CustomerConverter.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(url)
                 .build();
