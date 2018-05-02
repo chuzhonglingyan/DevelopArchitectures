@@ -1,8 +1,6 @@
 package com.yuntian.baselibs.net.core;
 
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.yuntian.baselibs.BuildConfig;
 import com.yuntian.baselibs.net.constant.URLConstant;
 import com.yuntian.baselibs.util.HttpsUtils;
@@ -66,10 +64,9 @@ public class NetApi {
                 .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager);
         OkHttpClient okHttpClient = builder.build();
 
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").serializeNulls().create();
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(url)
                 .build();
