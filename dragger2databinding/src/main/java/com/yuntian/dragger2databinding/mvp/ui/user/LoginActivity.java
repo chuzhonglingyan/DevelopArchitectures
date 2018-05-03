@@ -9,7 +9,7 @@ import com.yuntian.baselibs.net.core.ApiManager;
 import com.yuntian.baselibs.net.entity.rep.NewsBean;
 import com.yuntian.baselibs.net.result.CustomObserver;
 import com.yuntian.baselibs.net.service.NewsService;
-import com.yuntian.baselibs.rx.RxHandleResult;
+import com.yuntian.baselibs.net.result.RxHandleResult;
 import com.yuntian.dragger2databinding.R;
 import com.yuntian.dragger2databinding.databinding.ActivityLoginBinding;
 import com.yuntian.dragger2databinding.mvp.ui.user.bean.TokenBean;

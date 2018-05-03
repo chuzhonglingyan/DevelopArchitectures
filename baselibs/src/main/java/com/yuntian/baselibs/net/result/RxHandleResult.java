@@ -1,9 +1,7 @@
-package com.yuntian.baselibs.rx;
+package com.yuntian.baselibs.net.result;
 
 
 import com.yuntian.baselibs.net.entity.rep.BaseResponse;
-import com.yuntian.baselibs.net.result.ErrorMsg;
-import com.yuntian.baselibs.net.result.ServerException;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;

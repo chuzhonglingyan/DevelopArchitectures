@@ -2,4 +2,9 @@
     package="com.yuntian.baselibs" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
+    <!--<meta-data-->
+        <!--android:name="com.yuntian.baselibs.util.glide.GlideModelConfig"-->
+        <!--android:value="GlideModule" />-->
 </manifest>

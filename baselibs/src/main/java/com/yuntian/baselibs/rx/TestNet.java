@@ -7,6 +7,7 @@ import com.yuntian.baselibs.net.entity.rep.RegisterResponse;
 import com.yuntian.baselibs.net.entity.req.LoginPsdRequest;
 import com.yuntian.baselibs.net.entity.req.RegisterRequest;
 import com.yuntian.baselibs.net.result.CustomObserver;
+import com.yuntian.baselibs.net.result.RxHandleResult;
 import com.yuntian.baselibs.net.service.UserService;
 
 import io.reactivex.ObservableSource;
