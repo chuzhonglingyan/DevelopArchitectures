@@ -121,6 +121,22 @@ public class FragmentHelper {
         return (T) fragment;
     }
 
+    /**
+     * 重复利用fragment实例，并解决add重叠问题,保证当前显示一个fragment视图,添加到stack里面去
+     *
+     * @param fragmentActivity
+     * @param containerId
+     * @param <T>
+     * @return
+     */
+    public static <T extends Fragment> T addOrShowStackFragment(FragmentActivity fragmentActivity, int containerId, Fragment fragment) {
+        if (fragment.isAdded()) {
+            showFragment(fragmentActivity, fragment);
+        } else {
+            addToBackStack(fragmentActivity, containerId, fragment);
+        }
+        return (T) fragment;
+    }
 
 
     /**
@@ -156,6 +172,22 @@ public class FragmentHelper {
             }
         }
     }
+
+
+    /**
+     * 显示指定的Fragment(show()，hide()最终是让Fragment的View setVisibility(true还是false)，不会调用生命周期)
+     */
+    public static void hideAllFragment(FragmentActivity fragmentActivity, List<Fragment> fragmentList) {
+        FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+        if (fragmentList.size() > 0) {
+            for (int i = 0; i < fragmentList.size(); i++) {
+                Fragment tempFragment = fragmentList.get(i);
+                transaction.hide(tempFragment);
+            }
+            transaction.commit();
+        }
+    }
+
 
     /**
      * 显示指定的Fragment(show()，hide()最终是让Fragment的View setVisibility(true还是false)，不会调用生命周期)
@@ -217,7 +249,6 @@ public class FragmentHelper {
         transaction.addToBackStack(null); //此处的stackName决定前后frgament是否在一个栈中
         transaction.commit();
     }
-
 
 
     /**
@@ -295,6 +326,40 @@ public class FragmentHelper {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(containerId, fragment, getFragmentTag(fragment));
             transaction.addToBackStack(null); //此处的stackName决定前后frgament是否在一个栈中
+            transaction.commit();
+        }
+    }
+
+    /**
+     * 添加fragment到回退栈里面去,直接加入到栈顶
+     *
+     * @param fragmentActivity
+     * @param containerId
+     * @param fragment
+     */
+    public static void addToBackStack(FragmentActivity fragmentActivity, int containerId, Fragment fragment, String tag) {
+        if (!fragment.isAdded()) {
+            FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(containerId, fragment, tag);
+            transaction.addToBackStack(null); //此处的stackName决定前后frgament是否在一个栈中
+            transaction.commit();
+        }
+    }
+
+    /**
+     * 添加fragment到回退栈里面去,直接加入到栈顶
+     *
+     * @param fragmentActivity
+     * @param containerId
+     * @param fragment
+     */
+    public static void addToBackStack(FragmentActivity fragmentActivity, int containerId, Fragment fragment, String tag, String name) {
+        if (!fragment.isAdded()) {
+            FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(containerId, fragment, tag);
+            transaction.addToBackStack(name); //此处的stackName决定前后frgament是否在一个栈中
             transaction.commit();
         }
     }
@@ -431,12 +496,35 @@ public class FragmentHelper {
         return target;
     }
 
+    /**
+     * 隐藏Fragment (show()，hide()最终是让Fragment的View setVisibility(true还是false)，不会调用生命周期)
+     */
+    public void hideFragmentAll(@NonNull FragmentManager fragmentManager, Fragment paerentFragment) {
+        if (paerentFragment != null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.hide(paerentFragment);
+            List<Fragment> fragments = fragmentManager.getFragments();
+            int count = fragments.size();
+            for (int i = count - 1; i > -1; i--) {
+                Fragment f = fragments.get(i);
+                hideFragmentAll(f.getChildFragmentManager(), f);
+                if (f == null) {
+                    break;
+                }
+                transaction.hide(f);
+
+            }
+            transaction.commit();
+        }
+    }
+
 
     /**
      * 是加入到主线队列的末尾，等其它任务完成后才开始出栈，
+     *
      * @param fragmentActivity
      */
-    public static  void  popBackStack(FragmentActivity fragmentActivity){
+    public static void popBackStack(FragmentActivity fragmentActivity) {
         FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
         // popBackStackImmediate:是队列内的任务立即执行，再将出栈任务放到队列尾（可以理解为立即出栈）。
         fragmentManager.popBackStack();
@@ -447,16 +535,17 @@ public class FragmentHelper {
      * 而不是popBackStack(tag/id)，如果你想在出栈后，立刻beginTransaction()开始一项事务，
      * 你应该把事务的代码post/postDelay到主线程的消息队列里
      * popBackStackImmediate:是队列内的任务立即执行，再将出栈任务放到队列尾（可以理解为立即出栈）。
+     *
      * @param fragmentActivity
      */
-    public static  void  popBackStackImmediate(FragmentActivity fragmentActivity){
+    public static void popBackStackImmediate(FragmentActivity fragmentActivity) {
         FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
         fragmentManager.popBackStackImmediate();
     }
 
-    public static  void  popBackStackImmediate(FragmentActivity fragmentActivity, String name){
+    public static void popBackStackImmediate(FragmentActivity fragmentActivity, String name) {
         FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
-        fragmentManager.popBackStackImmediate(name,0);
+        fragmentManager.popBackStackImmediate(name, 0);
     }
 
 }

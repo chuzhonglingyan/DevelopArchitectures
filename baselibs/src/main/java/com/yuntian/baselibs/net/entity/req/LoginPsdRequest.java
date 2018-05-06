@@ -8,7 +8,6 @@ public class LoginPsdRequest extends BaseRequest {
 
 
 
-
     private String token;
     private String mobile;
     private String password;

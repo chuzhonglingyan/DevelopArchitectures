@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.LogUtils;
+
 /**
  * description  .
  * Created by ChuYingYan on 2018/4/11.
@@ -46,8 +48,9 @@ public abstract class BaseFragment extends Fragment {
         } else {
             args = new Bundle();
         }
-
+        LogUtils.d(this.toString() + ",args=" + args.toString());
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -69,8 +72,9 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        init();
         initView();
-        initData();
+        initData(savedInstanceState);
     }
 
 
@@ -99,7 +103,9 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-            args = savedInstanceState;
+            if (savedInstanceState!=null){
+                args = savedInstanceState;
+            }
     }
 
     @Override
@@ -118,7 +124,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
         isViewInitialized=false;
     }
 
@@ -145,9 +150,11 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract int getLayoutId();
 
+    protected abstract void init();
+
     protected abstract void initView();
 
-    protected abstract void initData();
+    protected abstract void initData(Bundle savedInstanceState);
 
 
     /**

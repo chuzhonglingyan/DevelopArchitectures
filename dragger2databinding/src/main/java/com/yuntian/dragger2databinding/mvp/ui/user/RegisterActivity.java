@@ -37,11 +37,11 @@ public class RegisterActivity extends UserViewActivity<ActivityRegisterBinding,U
 
     }
 
-    @Override
-    public void showMsg() {
-        super.showMsg();
-    }
 
+    @Override
+    public void showMsg(String message, int code) {
+
+    }
 
     @Override
     public void registerSuccess(TokenBean result) {

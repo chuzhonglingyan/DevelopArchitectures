@@ -6,9 +6,9 @@ import android.os.Bundle;
 import com.blankj.utilcode.util.LogUtils;
 import com.yuntian.basedragger2.inject.AppComponent;
 import com.yuntian.baselibs.net.core.ApiManager;
-import com.yuntian.baselibs.net.entity.rep.NewsBean;
+import com.yuntian.baselibs.net.entity.rep.GanHuoBean;
 import com.yuntian.baselibs.net.result.CustomObserver;
-import com.yuntian.baselibs.net.service.NewsService;
+import com.yuntian.baselibs.net.service.GanHuoService;
 import com.yuntian.baselibs.net.result.RxHandleResult;
 import com.yuntian.dragger2databinding.R;
 import com.yuntian.dragger2databinding.databinding.ActivityLoginBinding;
@@ -56,14 +56,14 @@ public class LoginActivity extends UserViewActivity<ActivityLoginBinding, UserCo
     }
 
     public void testApi() {
-        NewsService newsService = ApiManager.getApi().create(NewsService.class);
-        newsService.getNewsList("1")
+        GanHuoService ganHuoService = ApiManager.getApi().create(GanHuoService.class);
+        ganHuoService.getGanHuoList("1")
                 .compose(RxHandleResult.handleResult())
-                .subscribe(new CustomObserver<List<NewsBean>>() {
+                .subscribe(new CustomObserver<List<GanHuoBean>>() {
 
                     @Override
-                    protected void _onNext(List<NewsBean> newsBeans) {
-                        LogUtils.d("当前线程" + Thread.currentThread().getName() + ":" + newsBeans.toString());
+                    protected void _onNext(List<GanHuoBean> ganHuoBeans) {
+                        LogUtils.d("当前线程" + Thread.currentThread().getName() + ":" + ganHuoBeans.toString());
                     }
 
                     @Override
@@ -73,17 +73,17 @@ public class LoginActivity extends UserViewActivity<ActivityLoginBinding, UserCo
     }
 
     public void testApi2() {
-        NewsService newsService = ApiManager.getApi().create(NewsService.class);
-        newsService.getNewsListA()
+        GanHuoService ganHuoService = ApiManager.getApi().create(GanHuoService.class);
+        ganHuoService.getGanHuoListTest()
                 .compose(RxHandleResult.handleResult())
-                .subscribe(new CustomObserver<List<NewsBean>>() {
+                .subscribe(new CustomObserver<List<GanHuoBean>>() {
 
                     @Override
-                    protected void _onNext(List<NewsBean> newsBeans) {
-                        if (newsBeans!=null){
-                            LogUtils.d("当前线程" + Thread.currentThread().getName() + ":" + newsBeans.toString());
+                    protected void _onNext(List<GanHuoBean> ganHuoBeans) {
+                        if (ganHuoBeans !=null){
+                            LogUtils.d("当前线程" + Thread.currentThread().getName() + ":" + ganHuoBeans.toString());
                         }
-                        LogUtils.d("当前线程" + Thread.currentThread().getName() + ":" + newsBeans);
+                        LogUtils.d("当前线程" + Thread.currentThread().getName() + ":" + ganHuoBeans);
                     }
 
                     @Override
@@ -92,9 +92,10 @@ public class LoginActivity extends UserViewActivity<ActivityLoginBinding, UserCo
                 });
     }
 
+
     @Override
-    public void showMsg() {
-        super.showMsg();
+    public void showMsg(String message, int code) {
+        super.showMsg(message, code);
     }
 
     @Override

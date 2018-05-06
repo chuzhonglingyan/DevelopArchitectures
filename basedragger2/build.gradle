@@ -33,7 +33,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
 
-    api project(':baselibs')
+    api project(':basecomponent')
 
     implementation "com.google.dagger:dagger:${rootProject.ext.dagger}"
     annotationProcessor "com.google.dagger:dagger-compiler:${rootProject.ext.dagger}"

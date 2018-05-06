@@ -29,11 +29,9 @@ public abstract class UserViewActivity<B extends ViewDataBinding,P extends BaseP
 
     }
 
+
     @Override
-    public void showMsg() {
+    public void showMsg(String message, int code) {
 
     }
-
-
-
 }

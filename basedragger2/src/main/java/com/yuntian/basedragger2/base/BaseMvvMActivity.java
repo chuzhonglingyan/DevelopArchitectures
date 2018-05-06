@@ -2,8 +2,8 @@ package com.yuntian.basedragger2.base;
 
 import android.databinding.ViewDataBinding;
 
+import com.yuntian.basecomponent.base.BaseDataBindingActivity;
 import com.yuntian.basedragger2.inject.AppComponent;
-import com.yuntian.basedragger2.mvvm.BaseViewMode;
 
 import javax.inject.Inject;
 

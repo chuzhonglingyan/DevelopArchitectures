@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.android.databinding.library.baseAdapters.BR;
-import com.yuntian.basedragger2.mvvm.IModeData;
+import com.yuntian.basecomponent.mvvm.IModeData;
 import com.yuntian.dragger2databinding.mvvm.ui.bean.UserBean;
 
 

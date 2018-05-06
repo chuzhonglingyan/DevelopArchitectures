@@ -11,6 +11,6 @@ public interface BaseView {
     void transmit();
 
 
-    void showMsg();
+    void showMsg(String message, int code);
 
 }

@@ -1,6 +1,7 @@
 package com.yuntian.baselibs.util;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -18,12 +19,14 @@ import java.util.Map;
 public class GsonUtil {
 
 
-    private static Gson gson = new Gson();
+    private static Gson gson;
+    private static JsonParser sJsonParser = new JsonParser();
 
-
-    private GsonUtil() {
+    static {
+        gson = new GsonBuilder().create();
     }
 
+    private GsonUtil() {}
 
     /**
      * 将object对象转成json字符串
@@ -92,7 +95,7 @@ public class GsonUtil {
     public static <T> List<T> jsonToList(String json, Class<T> cls) {
         List<T> list = new ArrayList<T>();
         try {
-            JsonArray array = new JsonParser().parse(json).getAsJsonArray();
+            JsonArray array = sJsonParser.parse(json).getAsJsonArray();
             for (final JsonElement elem : array) {
                 list.add(gson.fromJson(elem, cls));
             }

@@ -51,6 +51,36 @@ public class RxHandleResult {
         };
     }
 
+    /**
+     * 对服务器返回数据进行预处理
+     *
+     * @param <T>
+     * @return
+     */
+    public static <T> ObservableTransformer<BaseResponse<T>, T> handleResult1() {
+        return new ObservableTransformer<BaseResponse<T>, T>() {
+            @Override
+            public ObservableSource<T> apply(Observable<BaseResponse<T>> upstream) {
+                return upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                        .to(new Function<Observable<BaseResponse<T>>, ObservableSource<T>>() {
+                            @Override
+                            public ObservableSource<T> apply(Observable<BaseResponse<T>> baseResponseObservable) throws Exception {
+                                return baseResponseObservable.flatMap(new Function<BaseResponse<T>, ObservableSource<T>>() {
+                                    @Override
+                                    public ObservableSource<T> apply(BaseResponse<T> result) throws Exception {
+                                        if (result.success()) {
+                                            return createData(result.getData());
+                                        } else {
+                                            return Observable.error(new ServerException(result.getMsg(), result.getCode()));
+                                        }
+                                    }
+                                });
+                            }
+                        });
+            }
+        };
+    }
+
 
     /**
      * 对服务器返回数据进行预处理

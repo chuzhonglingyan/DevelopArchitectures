@@ -3,7 +3,7 @@ package com.yuntian.dragger2databinding.mvvm.ui.mode;
 import android.view.View;
 import android.widget.Toast;
 
-import com.yuntian.basedragger2.mvvm.BaseViewMode;
+import com.yuntian.basedragger2.base.BaseViewMode;
 import com.yuntian.dragger2databinding.databinding.ActivityUserViewmodeBinding;
 
 import javax.inject.Inject;

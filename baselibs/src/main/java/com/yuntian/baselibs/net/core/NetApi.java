@@ -1,18 +1,18 @@
 package com.yuntian.baselibs.net.core;
 
 
+import com.blankj.utilcode.util.Utils;
 import com.yuntian.baselibs.BuildConfig;
 import com.yuntian.baselibs.net.constant.URLConstant;
 import com.yuntian.baselibs.net.converter.CustomerConverter;
+import com.yuntian.baselibs.net.interceptor.CacheControlInterceptor;
 import com.yuntian.baselibs.util.HttpsUtils;
 
-import java.io.IOException;
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Interceptor;
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -24,11 +24,19 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
  */
 public class NetApi {
 
-    //读超时长，单位：秒
-    public static final int READ_TIME_OUT = 10;
+    /**
+     * 连接超时时间，单位s
+     */
+    private static final byte DEFAULT_CONNECT_TIMEOUT = 10;
+    /**
+     * 读超时时间，单位s
+     */
+    private static final int DEFAULT_READ_TIMEOUT = 10;
+    /**
+     * 写超时时间，单位s
+     */
+    private static final int DEFAULT_WRITE_TIMEOUT = 10;
 
-    //连接时长，单位：秒
-    public static final int CONNECT_TIME_OUT = 10;
 
     private Retrofit retrofit;
 
@@ -42,30 +50,26 @@ public class NetApi {
 
     //构造方法私有
     private NetApi(String url) {
-        //开启Log
-        HttpLoggingInterceptor logInterceptor = createHttpLoggingInterceptor();
-        //增加头部信息
-        Interceptor headerInterceptor = new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request build = chain.request().newBuilder()
-                        .addHeader("Content-Type", "application/json")
-                        .build();
-                return chain.proceed(build);
-            }
-        };
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
         HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
-        builder.readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(Boolean.FALSE)            // 失败时重新连接
-                .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
-                .addInterceptor(logInterceptor)
-                .addInterceptor(headerInterceptor)
-                .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager);
-        OkHttpClient okHttpClient = builder.build();
+        //缓存
+        File cacheFile = new File(Utils.getApp().getCacheDir(),Utils.getApp().getPackageName()+ "-cache");
+        Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
+        CacheControlInterceptor cacheControlInterceptor=new CacheControlInterceptor();
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(DEFAULT_CONNECT_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(DEFAULT_READ_TIMEOUT, TimeUnit.SECONDS)
+                .writeTimeout(DEFAULT_WRITE_TIMEOUT, TimeUnit.SECONDS)
+                .addInterceptor(createHttpLoggingInterceptor())
+                //.addInterceptor(new HeaderInterceptor())
+                .addInterceptor(cacheControlInterceptor)
+                .addNetworkInterceptor(cacheControlInterceptor)
+                .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
+                .cache(cache);
 
         retrofit = new Retrofit.Builder()
-                .client(okHttpClient)
+                .client(builder.build())
                 .addConverterFactory(CustomerConverter.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(url)
