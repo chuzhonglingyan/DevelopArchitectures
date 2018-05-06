@@ -40,10 +40,6 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation "com.android.support.test:runner:${rootProject.ext.testRunnerVersion}"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.ext.espressoVersion}"
-    testImplementation "junit:junit:${rootProject.ext.junitVersion}"
-
 
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
 

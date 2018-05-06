@@ -1,7 +1,9 @@
-include  ':app', ':newsframe', ':basecomponent',
-       // ':mvpexample',
-        //':mvvmexample',
+include ':newsframe',
+        ':basecomponent',
         ':downloaderLib',
         ':baselibs',
-        ':dragger2databinding',
         ':basedragger2'
+        //':dragger2databinding'
+        //':mvpexample',
+        //':mvvmexample'
+        //':app'

@@ -8,12 +8,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/basecomponent" />
             <option value="$PROJECT_DIR$/basedragger2" />
             <option value="$PROJECT_DIR$/baselibs" />
             <option value="$PROJECT_DIR$/downloaderLib" />
-            <option value="$PROJECT_DIR$/dragger2databinding" />
             <option value="$PROJECT_DIR$/newsframe" />
           </set>
         </option>
