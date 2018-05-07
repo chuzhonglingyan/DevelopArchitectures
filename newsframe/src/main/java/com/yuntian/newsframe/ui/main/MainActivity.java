@@ -20,22 +20,20 @@ import com.yuntian.newsframe.databinding.ActivityMainBinding;
 import com.yuntian.newsframe.storage.AppConstants;
 import com.yuntian.newsframe.ui.movie.MoiveMainFragment;
 import com.yuntian.newsframe.ui.news.NewsMainFragment;
-import com.yuntian.newsframe.ui.photo.PhotoNewsFragment;
+import com.yuntian.newsframe.ui.photo.PhotoMainFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * description show/hide切换fragment.
+ * Created by ChuYingYan on 2018/5/7.
+ */
 public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> implements NavigationView.OnNavigationItemSelectedListener {
 
     private int mItemId = R.id.nav_news;
-
-    private Stack<Integer> stack = new Stack<>();
-    private List<Fragment> fragmentList = new ArrayList<>();
-    private Fragment newsMainFragment;
-    private Fragment photoMainFragment;
-    private Fragment moiveMainFragment;
-
+    private Stack<Integer> stackTabs = new Stack<>();
+    private List<Fragment> fragmentList = new Stack<>();
 
     @Override
     protected int getLayoutId() {
@@ -49,7 +47,6 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> i
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-
         if (savedInstanceState != null) {
             mItemId = savedInstanceState.getInt(AppConstants.HOME_CURRENT_TAB_POSITION);
         }
@@ -90,10 +87,12 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> i
 
 
     public void addToStack(int id) {
-        if (!stack.contains(id)) {
-            stack.push(id);
+        if (!stackTabs.contains(id)) {
+            stackTabs.push(id);
         }
+
     }
+
 
     /**
      * 切换
@@ -102,18 +101,19 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> i
         switch (position) {
             //新闻
             case R.id.nav_news:
+                FragmentHelper.addHideShowFragment(this, fragmentList, NewsMainFragment.class, R.id.fl_container, NewsMainFragment.TAG);
+                stackTabs.clear();
                 addToStack(R.id.nav_news);
-                newsMainFragment = addshowhideFragment(fragmentList, newsMainFragment, NewsMainFragment.class, NewsMainFragment.TAG);
                 break;
             //图片
             case R.id.nav_photos:
+                FragmentHelper.addHideShowFragment(this, fragmentList, PhotoMainFragment.class, R.id.fl_container, PhotoMainFragment.TAG);
                 addToStack(R.id.nav_photos);
-                photoMainFragment = addshowhideFragment(fragmentList, photoMainFragment, PhotoNewsFragment.class, PhotoNewsFragment.TAG);
                 break;
             //视频
             case R.id.nav_videos:
+                FragmentHelper.addHideShowFragment(this, fragmentList, MoiveMainFragment.class, R.id.fl_container, MoiveMainFragment.TAG);
                 addToStack(R.id.nav_videos);
-                moiveMainFragment = addshowhideFragment(fragmentList, moiveMainFragment, MoiveMainFragment.class, MoiveMainFragment.TAG);
                 break;
             //设置
             case R.id.nav_setting:
@@ -125,33 +125,20 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> i
     }
 
 
-    public Fragment addshowhideFragment(List<Fragment> fragmentList, Fragment fragment, Class<? extends Fragment> frcass, String tag) {
-        FragmentHelper.hideAllFragment(this, fragmentList);
-        if (fragment == null) {
-            fragment = FragmentHelper.newInstance(frcass);
-            fragmentList.add(fragment);
-            FragmentHelper.addFragment(this, R.id.fl_container, fragment);
-        } else {
-            FragmentHelper.showFragment(this, fragment);
-        }
-        return fragment;
-    }
-
-
     @Override
     public void onBackPressed() {
         // 获取堆栈里有几个
-        final int stackEntryCount = stack.size();
+        final int stackEntryCount = stackTabs.size();
         if (mViewBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             mViewBinding.drawerLayout.closeDrawer(GravityCompat.START);
         } else if (stackEntryCount <= 1) {
             exit(); // 如果剩一个说明在主页，提示按两次退出app
         } else {
-            final int tabId = stack.get(stackEntryCount - 2);
+            final int tabId = stackTabs.get(stackEntryCount - 2);
             mViewBinding.navView.setCheckedItem(tabId);
             switchTo(tabId);
             mItemId = tabId;
-            stack.pop();
+            stackTabs.pop();
         }
     }
 
@@ -189,5 +176,13 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> i
             finish();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        fragmentList.clear();
+        stackTabs.clear();
+    }
+
 
 }

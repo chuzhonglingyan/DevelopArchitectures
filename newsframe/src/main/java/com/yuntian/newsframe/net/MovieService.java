@@ -1,4 +1,4 @@
-package com.yuntian.newsframe.net.service;
+package com.yuntian.newsframe.net;
 
 /**
  * description  .

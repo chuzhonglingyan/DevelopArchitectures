@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -48,25 +49,6 @@ public class FragmentHelper {
 
 
     /**
-     * 以类的简写名字作为Tag
-     *
-     * @param fragmentClass
-     * @return
-     */
-    public static String getFragmentTag(Class<? extends Fragment> fragmentClass) {
-        return fragmentClass.getSimpleName();
-    }
-
-
-    public static String getFragmentTag(Fragment fragment) {
-        if (fragment == null) {
-            return null;
-        }
-        return fragment.getClass().getSimpleName();
-    }
-
-
-    /**
      * 获得当前activity的fragment的实例
      *
      * @param fragmentActivity
@@ -74,8 +56,8 @@ public class FragmentHelper {
      * @param <T>
      * @return
      */
-    public static <T extends Fragment> T getFragment(FragmentActivity fragmentActivity, Class<? extends Fragment> fragmentClass) {
-        Fragment fragment = fragmentActivity.getSupportFragmentManager().findFragmentByTag(getFragmentTag(fragmentClass));
+    public static <T extends Fragment> T getFragment(FragmentActivity fragmentActivity, Class<? extends Fragment> fragmentClass, String tag) {
+        Fragment fragment = fragmentActivity.getSupportFragmentManager().findFragmentByTag(tag);
         if (fragment == null) {
             return newInstance(fragmentClass);
         }
@@ -91,12 +73,12 @@ public class FragmentHelper {
      * @param <T>
      * @return
      */
-    public static <T extends Fragment> T addOrShowFragment(FragmentActivity fragmentActivity, int containerId, Class<? extends Fragment> fragmentClass) {
-        Fragment fragment = getFragment(fragmentActivity, fragmentClass);
+    public static <T extends Fragment> T addOrShowFragment(FragmentActivity fragmentActivity, int containerId, Class<? extends Fragment> fragmentClass, String tag) {
+        Fragment fragment = getFragment(fragmentActivity, fragmentClass, tag);
         if (fragment.isAdded()) {
             showFragment(fragmentActivity, fragment);
         } else {
-            addFragment(fragmentActivity, containerId, fragment);
+            addFragment(fragmentActivity, containerId, fragment, tag);
         }
         return (T) fragment;
     }
@@ -111,12 +93,12 @@ public class FragmentHelper {
      * @param <T>
      * @return
      */
-    public static <T extends Fragment> T addOrShowStackFragment(FragmentActivity fragmentActivity, int containerId, Class<? extends Fragment> fragmentClass) {
-        Fragment fragment = getFragment(fragmentActivity, fragmentClass);
+    public static <T extends Fragment> T addOrShowStackFragment(FragmentActivity fragmentActivity, int containerId, Class<? extends Fragment> fragmentClass, String tag) {
+        Fragment fragment = getFragment(fragmentActivity, fragmentClass, tag);
         if (fragment.isAdded()) {
             showFragment(fragmentActivity, fragment);
         } else {
-            addToBackStack(fragmentActivity, containerId, fragment);
+            addToBackStack(fragmentActivity, containerId, fragment, tag);
         }
         return (T) fragment;
     }
@@ -129,11 +111,11 @@ public class FragmentHelper {
      * @param <T>
      * @return
      */
-    public static <T extends Fragment> T addOrShowStackFragment(FragmentActivity fragmentActivity, int containerId, Fragment fragment) {
+    public static <T extends Fragment> T addOrShowStackFragment(FragmentActivity fragmentActivity, int containerId, Fragment fragment, String tag) {
         if (fragment.isAdded()) {
             showFragment(fragmentActivity, fragment);
         } else {
-            addToBackStack(fragmentActivity, containerId, fragment);
+            addToBackStack(fragmentActivity, containerId, fragment, tag);
         }
         return (T) fragment;
     }
@@ -182,7 +164,9 @@ public class FragmentHelper {
         if (fragmentList.size() > 0) {
             for (int i = 0; i < fragmentList.size(); i++) {
                 Fragment tempFragment = fragmentList.get(i);
-                transaction.hide(tempFragment);
+                if (tempFragment!=null){
+                    transaction.hide(tempFragment);
+                }
             }
             transaction.commit();
         }
@@ -228,10 +212,10 @@ public class FragmentHelper {
      * @param containerId
      * @param fragment
      */
-    public static void replaceFragment(FragmentActivity fragmentActivity, int containerId, Fragment fragment) {
+    public static void replaceFragment(FragmentActivity fragmentActivity, int containerId, Fragment fragment, String tag) {
         FragmentManager manager = fragmentActivity.getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(containerId, fragment, getFragmentTag(fragment));
+        transaction.replace(containerId, fragment, tag);
         transaction.commit();
     }
 
@@ -242,12 +226,53 @@ public class FragmentHelper {
      * @param containerId
      * @param fragment
      */
-    public static void replaceToBackStack(FragmentActivity fragmentActivity, int containerId, Fragment fragment) {
+    public static void replaceToBackStack(FragmentActivity fragmentActivity, int containerId, Fragment fragment, String tag) {
         FragmentManager manager = fragmentActivity.getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(containerId, fragment, getFragmentTag(fragment));
+        transaction.replace(containerId, fragment, tag);
         transaction.addToBackStack(null); //此处的stackName决定前后frgament是否在一个栈中
         transaction.commit();
+    }
+
+    /**
+     * 隐藏当前的fragment,创建显示当前添加fragment
+     *
+     * @param fragmentActivity
+     * @param containerId
+     */
+    public static Fragment addHideShowFragment(FragmentActivity fragmentActivity, List<Fragment> fragmentList, Class<? extends Fragment> fragmentClass, int containerId, String tag) {
+        FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        Fragment fragment = getFragment(fragmentActivity, fragmentClass, tag);
+        hideAllFragment(fragmentActivity, fragmentList);
+        if (!fragment.isAdded()) {
+            transaction.add(containerId, fragment, tag);
+            transaction.commit();
+            if (!fragmentList.contains(fragment)) {
+                fragmentList.add(fragment);
+            }
+        } else {
+            transaction.show(fragment);
+            transaction.commit();
+        }
+        return fragment;
+    }
+
+
+    /**
+     * 获得当前显示的fragment
+     *
+     * @param fragmentActivity
+     * @return
+     */
+    public static Fragment getVisibleFragment(FragmentActivity fragmentActivity) {
+        FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        for (Fragment fragment : fragments) {
+            if (fragment != null && fragment.isVisible())
+                return fragment;
+        }
+        return null;
     }
 
 
@@ -258,17 +283,23 @@ public class FragmentHelper {
      * @param containerId
      * @param fragment
      */
-    public static void hideAddFragment(FragmentActivity fragmentActivity, int containerId, Fragment fragment) {
+    public static void hideAddFragment(FragmentActivity fragmentActivity, int containerId, Fragment fragment, String tag) {
+        if (fragment == null) {
+            return;
+        }
+        FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        Fragment topFragment = fragmentManager.findFragmentById(containerId);
+        transaction.setReorderingAllowed(true);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        if (topFragment != null) {
+            transaction.hide(topFragment);
+        }
         if (!fragment.isAdded()) {
-            FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
-            Fragment topFragment = fragmentManager.findFragmentById(containerId);
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.setReorderingAllowed(true);
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            if (topFragment != null) {
-                transaction.hide(topFragment);
-            }
-            transaction.add(containerId, fragment, getFragmentTag(fragment));
+            transaction.add(containerId, fragment, tag);
+            transaction.commit();
+        } else {
+            transaction.show(fragment);
             transaction.commit();
         }
     }
@@ -280,7 +311,7 @@ public class FragmentHelper {
      * @param containerId
      * @param fragment
      */
-    public static void hideAddToBackStack(FragmentActivity fragmentActivity, int containerId, Fragment fragment) {
+    public static void hideAddToBackStack(FragmentActivity fragmentActivity, int containerId, Fragment fragment, String tag) {
         if (!fragment.isAdded()) {
             FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
             Fragment topFragment = fragmentManager.findFragmentById(containerId);
@@ -290,7 +321,7 @@ public class FragmentHelper {
             if (topFragment != null) {
                 transaction.hide(topFragment);
             }
-            transaction.add(containerId, fragment, getFragmentTag(fragment));
+            transaction.add(containerId, fragment, tag);
             transaction.addToBackStack(null); //此处的stackName决定前后frgament是否在一个栈中
             transaction.commit();
         }
@@ -304,28 +335,11 @@ public class FragmentHelper {
      * @param containerId
      * @param fragment
      */
-    public static void addFragment(FragmentActivity fragmentActivity, int containerId, Fragment fragment) {
+    public static void addFragment(FragmentActivity fragmentActivity, int containerId, Fragment fragment, String tag) {
         if (!fragment.isAdded()) {
             FragmentManager manager = fragmentActivity.getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            transaction.add(containerId, fragment, getFragmentTag(fragment));
-            transaction.commit();
-        }
-    }
-
-    /**
-     * 添加fragment到回退栈里面去,直接加入到栈顶
-     *
-     * @param fragmentActivity
-     * @param containerId
-     * @param fragment
-     */
-    public static void addToBackStack(FragmentActivity fragmentActivity, int containerId, Fragment fragment) {
-        if (!fragment.isAdded()) {
-            FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(containerId, fragment, getFragmentTag(fragment));
-            transaction.addToBackStack(null); //此处的stackName决定前后frgament是否在一个栈中
+            transaction.add(containerId, fragment, tag);
             transaction.commit();
         }
     }
@@ -346,6 +360,7 @@ public class FragmentHelper {
             transaction.commit();
         }
     }
+
 
     /**
      * 添加fragment到回退栈里面去,直接加入到栈顶
@@ -431,10 +446,10 @@ public class FragmentHelper {
      * @param fragment
      * @return
      */
-    public static Fragment getLatterFragment(FragmentActivity fragmentActivity, Fragment fragment) {
+    public static Fragment getLatterFragment(FragmentActivity fragmentActivity, Fragment fragment, String tag) {
         FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
         int count = fragmentManager.getBackStackEntryCount();
-        int index = findIndexAtBackStack(fragmentActivity, fragment);
+        int index = findIndexAtBackStack(fragmentActivity, fragment, tag);
         if (index > -1 && index < count - 1) {  //index 0 being the bottom of the stack.
             FragmentManager.BackStackEntry backStackEntry = fragmentManager.getBackStackEntryAt(index + 1);
             return fragmentManager.findFragmentByTag(backStackEntry.getName());
@@ -449,10 +464,10 @@ public class FragmentHelper {
      * @param fragment
      * @return
      */
-    public static Fragment getAheadFragment(FragmentActivity fragmentActivity, Fragment fragment) {
+    public static Fragment getAheadFragment(FragmentActivity fragmentActivity, Fragment fragment, String tag) {
         FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
         int count = fragmentManager.getBackStackEntryCount();
-        int index = findIndexAtBackStack(fragmentActivity, fragment);
+        int index = findIndexAtBackStack(fragmentActivity, fragment, tag);
         if (index > 0 && index < count) {
             FragmentManager.BackStackEntry backStackEntry = fragmentManager.getBackStackEntryAt(index - 1);
             return fragmentManager.findFragmentByTag(backStackEntry.getName());
@@ -460,13 +475,13 @@ public class FragmentHelper {
         return null;
     }
 
-    public static int findIndexAtBackStack(FragmentActivity fragmentActivity, Fragment fragment) {
+    public static int findIndexAtBackStack(FragmentActivity fragmentActivity, Fragment fragment, String tag) {
         FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
         int count = fragmentManager.getBackStackEntryCount();
         int index = -1;
         for (int i = 0; i < count; i++) {
             FragmentManager.BackStackEntry backStackEntry = fragmentManager.getBackStackEntryAt(i);
-            if (getFragmentTag(fragment).equals(backStackEntry.getName())) {
+            if (TextUtils.equals(tag, backStackEntry.getName())) {
                 index = i;
             }
         }

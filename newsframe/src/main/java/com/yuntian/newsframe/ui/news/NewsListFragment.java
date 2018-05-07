@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.yuntian.adapterlib.base.BaseRvAdapter;
 import com.yuntian.adapterlib.listener.OnItemDataClickListenerImp;
 import com.yuntian.adapterlib.util.RecyclerViewUtil;
 import com.yuntian.basedragger2.inject.AppComponent;
@@ -38,8 +37,6 @@ public class NewsListFragment extends NewsViewFragment<FrgmentSmartListBinding, 
     @Override
     protected void initView() {
         startPage = 0;
-        baseRvAdapter = new BaseRvAdapter() {
-        };
         RecyclerViewUtil.initRecyclerViewV(mContext, mViewBinding.rv, true, baseRvAdapter);
         mViewBinding.rv.setItemAnimator(new SlideInUpAnimator());
         baseRvAdapter.setOnItemDataClickListener(new OnItemDataClickListenerImp() {

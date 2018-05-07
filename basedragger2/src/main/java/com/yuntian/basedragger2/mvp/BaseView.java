@@ -13,4 +13,5 @@ public interface BaseView {
 
     void showMsg(String message, int code);
 
+
 }

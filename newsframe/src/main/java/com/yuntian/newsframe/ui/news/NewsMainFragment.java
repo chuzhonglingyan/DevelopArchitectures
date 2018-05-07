@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import com.yuntian.basecomponent.util.TabLayoutUtils;
 import com.yuntian.basecomponent.util.ToolBarUtil;
 import com.yuntian.basedragger2.inject.AppComponent;
-import com.yuntian.baselibs.adapter.BaseFPageStateAdapter;
 import com.yuntian.baselibs.util.FragmentHelper;
 import com.yuntian.newsframe.R;
 import com.yuntian.newsframe.databinding.FragmentNewsMainBinding;
@@ -21,14 +20,18 @@ import com.yuntian.newsframe.util.NewsChannelTableManager;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * description 新闻入口,.
+ * Created by ChuYingYan on 2018/5/7.
+ */
+
 public class NewsMainFragment extends NewsViewFragment<FragmentNewsMainBinding, NewsContract.Presenter> {
 
 
     public static final String TAG = "NewsMainFragment";
 
-    private BaseFPageStateAdapter fragmentAdapter;
 
-    private int isVisablePos=0;
+    private int isVisablePos = 0;
 
     @Override
     protected int getLayoutId() {
@@ -52,8 +55,8 @@ public class NewsMainFragment extends NewsViewFragment<FragmentNewsMainBinding, 
             bundle.putString(AppConstants.NEWS_TYPE, bean.getNewsChannelType());
             fragments.add(FragmentHelper.newInstance(NewsListFragment.class, bundle));
         }
-        fragmentAdapter = new BaseFPageStateAdapter(getChildFragmentManager(), fragments, titles);
-        mViewBinding.viewPager.setAdapter(fragmentAdapter);
+        baseFPageStateAdapter.updateFragments(fragments, titles);
+        mViewBinding.viewPager.setAdapter(baseFPageStateAdapter);
         mViewBinding.tabLayout.setupWithViewPager(mViewBinding.viewPager);
         //tab切换时不会调用onResmue方法，会调用setUserVisiable方法
         TabLayoutUtils.dynamicSetTabLayoutMode(mViewBinding.tabLayout);
@@ -81,26 +84,24 @@ public class NewsMainFragment extends NewsViewFragment<FragmentNewsMainBinding, 
     }
 
 
-
-
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        List<Fragment> fragmentList=fragmentAdapter.getData();
-        if (hidden){
+        List<Fragment> fragmentList = baseFPageStateAdapter.getData();
+        if (hidden) {
             for (int i = 0; i < fragmentList.size(); i++) {
-                Fragment fragment=fragmentList.get(i);
-                if (fragment.getUserVisibleHint()){
-                    isVisablePos=i;
+                Fragment fragment = fragmentList.get(i);
+                if (fragment.getUserVisibleHint()) {
+                    isVisablePos = i;
                 }
                 fragment.setUserVisibleHint(false);
             }
-        }else {
+        } else {
             for (int i = 0; i < fragmentList.size(); i++) {
-                Fragment fragment=fragmentList.get(i);
-                if (isVisablePos==i){
+                Fragment fragment = fragmentList.get(i);
+                if (isVisablePos == i) {
                     fragment.setUserVisibleHint(true);
-                }else {
+                } else {
                     fragment.setUserVisibleHint(false);
                 }
             }
@@ -111,7 +112,7 @@ public class NewsMainFragment extends NewsViewFragment<FragmentNewsMainBinding, 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        isVisablePos=0;
+        isVisablePos = 0;
     }
 
 

@@ -1,4 +1,4 @@
-package com.yuntian.newsframe.net.service;
+package com.yuntian.newsframe.net;
 
 import com.yuntian.newsframe.ui.news.bean.NewsBean;
 import com.yuntian.newsframe.ui.news.bean.NewsDetailInfo;
@@ -39,6 +39,7 @@ public interface NewsService {
      * @param specialIde 专题ID
      * @return
      */
+    @Headers(AVOID_HTTP403_FORBIDDEN)
     @GET("nc/special/{specialId}.html")
     Observable<Map<String, SpecialInfo>> getSpecial(@Path("specialId") String specialIde);
 
@@ -49,6 +50,7 @@ public interface NewsService {
      * @param newsId 专题ID
      * @return
      */
+    @Headers(AVOID_HTTP403_FORBIDDEN)
     @GET("nc/article/{newsId}/full.html")
     Observable<Map<String, NewsDetailInfo>> getNewsDetail(@Path("newsId") String newsId);
 

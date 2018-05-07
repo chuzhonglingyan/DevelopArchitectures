@@ -22,14 +22,17 @@ public class BaseFPageStateAdapter extends FragmentStatePagerAdapter {
 
     private List<Fragment> data = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
+    private FragmentManager fragmentManager;
 
 
     public BaseFPageStateAdapter(FragmentActivity fragmentActivity) {
         super(fragmentActivity.getSupportFragmentManager());
+        fragmentManager=fragmentActivity.getSupportFragmentManager();
     }
 
     public BaseFPageStateAdapter(FragmentActivity fragmentActivity, List<Fragment> list, List<String> titleList) {
         super(fragmentActivity.getSupportFragmentManager());
+        fragmentManager=fragmentActivity.getSupportFragmentManager();
         if (list != null) {
             data.addAll(list);
         }
@@ -40,6 +43,7 @@ public class BaseFPageStateAdapter extends FragmentStatePagerAdapter {
 
     public BaseFPageStateAdapter(FragmentManager fragmentManager, List<Fragment> list, List<String> titleList) {
         super(fragmentManager);
+        this.fragmentManager=fragmentManager;
         if (list != null) {
             data.addAll(list);
         }
@@ -112,7 +116,28 @@ public class BaseFPageStateAdapter extends FragmentStatePagerAdapter {
 
     /**
      * 刷新fragment
-     *
+     * @param fragments
+     * @param mTitles
+     */
+    public void updateFragments( List<Fragment> fragments, List<String> mTitles) {
+        if (data != null && data.size() > 0) {
+            FragmentTransaction ft = fragmentManager.beginTransaction();  //移除之前所有的Fragment
+            for (Fragment f : data) {
+                ft.remove(f);
+            }
+            ft.commitAllowingStateLoss();
+            fragmentManager.executePendingTransactions();
+            titles.clear();
+            data.clear();
+        }
+        titles.addAll(mTitles);
+        data.addAll(fragments);
+        notifyDataSetChanged();
+    }
+
+
+    /**
+     * 刷新fragment
      * @param fm
      * @param fragments
      * @param mTitles

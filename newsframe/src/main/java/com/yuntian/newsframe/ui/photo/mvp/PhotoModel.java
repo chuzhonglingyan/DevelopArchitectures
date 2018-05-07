@@ -1,4 +1,4 @@
-package com.yuntian.newsframe.ui.news.mvp;
+package com.yuntian.newsframe.ui.photo.mvp;
 
 import com.yuntian.baselibs.net.cache.CacheStrategy;
 import com.yuntian.baselibs.net.core.NetApi;
@@ -17,11 +17,11 @@ import io.reactivex.Observable;
  * description  M层.
  * Created by ChuYingYan on 2018/4/29.
  */
-public class NewsModel implements NewsContract.Model {
+public class PhotoModel implements PhotoContract.Model {
 
 
     @Inject
-    public NewsModel() {
+    public PhotoModel() {
 
     }
 

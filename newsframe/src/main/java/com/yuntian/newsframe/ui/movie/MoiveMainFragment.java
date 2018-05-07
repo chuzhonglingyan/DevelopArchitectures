@@ -1,9 +1,11 @@
 package com.yuntian.newsframe.ui.movie;
 
 import android.os.Bundle;
-import com.yuntian.newsframe.databinding.FragmentMovieMainBinding;
+
 import com.yuntian.basecomponent.base.BaseDataBindingFrgament;
+import com.yuntian.basecomponent.util.ToolBarUtil;
 import com.yuntian.newsframe.R;
+import com.yuntian.newsframe.databinding.FragmentMovieMainBinding;
 
 /**
  * description  .
@@ -21,7 +23,7 @@ public class MoiveMainFragment extends BaseDataBindingFrgament<FragmentMovieMain
 
     @Override
     protected void init() {
-
+        ToolBarUtil.initToolBar(mActivity, mViewBinding.toolBar, true, "电影");
     }
 
     @Override
