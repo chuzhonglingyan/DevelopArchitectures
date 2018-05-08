@@ -20,7 +20,7 @@ import com.yuntian.newsframe.databinding.ActivityMainBinding;
 import com.yuntian.newsframe.storage.AppConstants;
 import com.yuntian.newsframe.ui.movie.MoiveMainFragment;
 import com.yuntian.newsframe.ui.news.NewsMainFragment;
-import com.yuntian.newsframe.ui.photo.PhotoMainFragment;
+import com.yuntian.newsframe.ui.ganhuo.GankMainFragment;
 
 import java.util.List;
 import java.util.Stack;
@@ -107,7 +107,7 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> i
                 break;
             //图片
             case R.id.nav_photos:
-                FragmentHelper.addHideShowFragment(this, fragmentList, PhotoMainFragment.class, R.id.fl_container, PhotoMainFragment.TAG);
+                FragmentHelper.addHideShowFragment(this, fragmentList, GankMainFragment.class, R.id.fl_container, GankMainFragment.TAG);
                 addToStack(R.id.nav_photos);
                 break;
             //视频

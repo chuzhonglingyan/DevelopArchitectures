@@ -1,4 +1,4 @@
-package com.yuntian.newsframe.ui.news.inject;
+package com.yuntian.newsframe.ui.ganhuo.inject;
 
 
 import android.support.v4.app.Fragment;
@@ -8,9 +8,9 @@ import com.yuntian.adapterlib.base.BaseRvAdapter;
 import com.yuntian.basedragger2.scope.ActivityScope;
 import com.yuntian.baselibs.adapter.BaseFPageAdapter;
 import com.yuntian.baselibs.adapter.BaseFPageStateAdapter;
-import com.yuntian.newsframe.ui.news.mvp.NewsContract;
-import com.yuntian.newsframe.ui.news.mvp.NewsModel;
-import com.yuntian.newsframe.ui.news.mvp.NewsPresenter;
+import com.yuntian.newsframe.ui.ganhuo.mvp.GankContract;
+import com.yuntian.newsframe.ui.ganhuo.mvp.GankModel;
+import com.yuntian.newsframe.ui.ganhuo.mvp.GankPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -20,29 +20,31 @@ import dagger.Provides;
  * Created by ChuYingYan on 2018/5/1.
  */
 @Module
-public class NewsModule {
-    private NewsContract.View view;
+public class GankModule {
 
-    public NewsModule(NewsContract.View view) {
+
+    private GankContract.View view;
+
+    public GankModule(GankContract.View view) {
         this.view = view;
     }
 
     @ActivityScope
     @Provides
-    NewsContract.Model provideModel(NewsModel model) {
+    GankContract.Model provideModel(GankModel model) {
         return model;
     }
 
     @ActivityScope
     @Provides
-    NewsContract.View provideView() {
+    GankContract.View provideView() {
         return this.view;
     }
 
 
     @ActivityScope
     @Provides
-    NewsContract.Presenter providePresenter(NewsPresenter presenter) {
+    GankContract.Presenter providePresenter(GankPresenter presenter) {
         return presenter;
     }
 
@@ -59,12 +61,6 @@ public class NewsModule {
         return new BaseFPageStateAdapter(getFragmentActivty());
     }
 
-    @ActivityScope
-    @Provides
-    BaseFPageAdapter provideBaseFPageAdapter() {
-        return new BaseFPageAdapter(getFragmentActivty());
-    }
-
     public FragmentActivity getFragmentActivty() {
         if (view instanceof FragmentActivity) {
             return (FragmentActivity) view;
@@ -73,4 +69,11 @@ public class NewsModule {
         }
         return null;
     }
+
+    @ActivityScope
+    @Provides
+    BaseFPageAdapter provideBaseFPageAdapter() {
+        return new BaseFPageAdapter(getFragmentActivty());
+    }
+
 }

@@ -11,6 +11,11 @@ public class AppConstants {
     public static final String HOME_CURRENT_TAB_POSITION="home_current_tab_position";
 
 
+    public static final String GANK_DATATYPE = "dataType";
+
+    public static final String GANK_ARTICLE = "all";
+    public static final String GANK_WELFARE = "福利";
+    public static final String GANK_REST = "休息视频";
 
 
 }

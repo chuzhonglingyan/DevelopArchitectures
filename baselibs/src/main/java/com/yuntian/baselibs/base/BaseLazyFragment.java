@@ -62,6 +62,7 @@ public abstract class BaseLazyFragment extends BaseFragment {
     }
 
 
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

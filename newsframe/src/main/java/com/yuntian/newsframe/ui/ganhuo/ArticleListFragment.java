@@ -1,43 +1,50 @@
-package com.yuntian.newsframe.ui.photo;
+package com.yuntian.newsframe.ui.ganhuo;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
-import com.blankj.utilcode.util.LogUtils;
-import com.yuntian.adapterlib.base.BaseRvAdapter;
 import com.yuntian.adapterlib.listener.OnItemDataClickListenerImp;
 import com.yuntian.adapterlib.util.RecyclerViewUtil;
 import com.yuntian.basedragger2.inject.AppComponent;
 import com.yuntian.newsframe.R;
 import com.yuntian.newsframe.databinding.FrgmentSmartListBinding;
-import com.yuntian.newsframe.ui.news.bean.NewsBean;
-import com.yuntian.newsframe.ui.news.mvp.NewsContract;
-import com.yuntian.newsframe.ui.news.mvp.NewsViewFragment;
+import com.yuntian.newsframe.ui.ganhuo.bean.GankInfo;
+import com.yuntian.newsframe.ui.ganhuo.inject.DaggerGankComponent;
+import com.yuntian.newsframe.ui.ganhuo.inject.GankModule;
+import com.yuntian.newsframe.ui.ganhuo.mvp.GankContract;
+import com.yuntian.newsframe.ui.ganhuo.mvp.GankViewFragment;
 
 import java.util.List;
 
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
-import static com.yuntian.newsframe.storage.AppConstants.NEWS_ID;
-import static com.yuntian.newsframe.storage.AppConstants.NEWS_TYPE;
+import static com.yuntian.newsframe.storage.AppConstants.GANK_DATATYPE;
 
-public class WelfareListFragment extends NewsViewFragment<FrgmentSmartListBinding, NewsContract.Presenter> {
+public class ArticleListFragment extends GankViewFragment<FrgmentSmartListBinding, GankContract.Presenter> {
 
-
-    private String mNewsId;
-    private String mNewsType;
+    private String dataType;
     private int startPage;
+
+
 
     @Override
     protected int getLayoutId() {
         return R.layout.frgment_smart_list;
     }
 
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setCache(true);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
     @Override
     protected void initView() {
         startPage = 0;
-        baseRvAdapter = new BaseRvAdapter() {
-        };
+
         RecyclerViewUtil.initRecyclerViewV(mContext, mViewBinding.rv, true, baseRvAdapter);
         mViewBinding.rv.setItemAnimator(new SlideInUpAnimator());
         baseRvAdapter.setOnItemDataClickListener(new OnItemDataClickListenerImp() {
@@ -48,11 +55,11 @@ public class WelfareListFragment extends NewsViewFragment<FrgmentSmartListBindin
         });
         mViewBinding.refreshLayout.setOnRefreshListener((refreshlayout) -> {
             startPage = 0;
-            mPresenter.getNewsList(mNewsType, mNewsId, startPage);
+            mPresenter.getWelfarePhotos(dataType,startPage);
         });
         mViewBinding.refreshLayout.setEnableLoadMore(false);
         mViewBinding.refreshLayout.setOnLoadMoreListener((refreshlayout) -> {
-            mPresenter.getNewsList(mNewsType, mNewsId, startPage);
+            mPresenter.getWelfarePhotos(dataType,startPage);
         });
     }
 
@@ -64,10 +71,8 @@ public class WelfareListFragment extends NewsViewFragment<FrgmentSmartListBindin
     @Override
     protected void lazyLoad() {
         if (args != null) {
-            LogUtils.d("mNewsId" + mNewsId + ",mPresenter" + mPresenter.toString());
-            mNewsId = args.getString(NEWS_ID);
-            mNewsType = args.getString(NEWS_TYPE);
-            mPresenter.getNewsList(mNewsType, mNewsId, startPage);
+            dataType = args.getString(GANK_DATATYPE);
+            mPresenter.getWelfarePhotos(dataType,startPage);
         }
     }
 
@@ -84,8 +89,8 @@ public class WelfareListFragment extends NewsViewFragment<FrgmentSmartListBindin
     }
 
     @Override
-    public void getNewsListSuccess(List<NewsBean> result) {
-        super.getNewsListSuccess(result);
+    public void getWelfarePhotos(List<GankInfo> result) {
+        super.getWelfarePhotos(result);
         if (startPage == 0) {
             baseRvAdapter.setData(result);
             mViewBinding.refreshLayout.finishRefresh();
@@ -105,12 +110,12 @@ public class WelfareListFragment extends NewsViewFragment<FrgmentSmartListBindin
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-//        DaggerNewsComponent
-//                .builder()
-//                .appComponent(appComponent)
-//                .newsModule(new NewsModule(this))
-//                .build()
-//                .inject(this);  //调用inject，注入就完成了。此时使用@Inject来标记成员变量就可以使用了
+        DaggerGankComponent
+                .builder()
+                .appComponent(appComponent)
+                .gankModule(new GankModule(this))
+                .build()
+                .inject(this);  //调用inject，注入就完成了。此时使用@Inject来标记成员变量就可以使用了
     }
 
 }

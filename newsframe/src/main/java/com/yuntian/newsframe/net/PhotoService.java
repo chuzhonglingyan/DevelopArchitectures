@@ -1,9 +1,11 @@
 package com.yuntian.newsframe.net;
 
 import com.yuntian.baselibs.net.cache.CacheStrategy;
+import com.yuntian.baselibs.net.entity.rep.BaseResponse;
 import com.yuntian.newsframe.storage.table.BeautyPhotoInfo;
-import com.yuntian.newsframe.ui.photo.bean.PhotoInfo;
-import com.yuntian.newsframe.ui.photo.bean.PhotoSetInfo;
+import com.yuntian.newsframe.ui.ganhuo.bean.GankInfo;
+import com.yuntian.newsframe.ui.ganhuo.bean.PhotoInfo;
+import com.yuntian.newsframe.ui.ganhuo.bean.PhotoSetInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -62,5 +64,15 @@ public interface PhotoService {
     @GET("recommend/getChanListNews?channel=T1456112189138&size=20")
     Observable<Map<String, List<BeautyPhotoInfo>>> getBeautyPhoto(@Query("offset") int offset);
 
+
+    /**
+     * 获取福利图片
+     * eg: http://gank.io/api/data/福利/10/1
+     * @param page 页码
+     * @return
+     */
+    @Headers(CacheStrategy.CACHE_CONTROL_AGE)
+    @GET("http://gank.io/api/data/%E7%A6%8F%E5%88%A9/{10}/{page}")
+    Observable<BaseResponse<List<GankInfo>>> getWelfarePhotos(@Path("page") int page);
 
 }

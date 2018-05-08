@@ -1,4 +1,4 @@
-package com.yuntian.newsframe.ui.photo.bean;
+package com.yuntian.newsframe.ui.ganhuo.bean;
 
 import java.util.List;
 

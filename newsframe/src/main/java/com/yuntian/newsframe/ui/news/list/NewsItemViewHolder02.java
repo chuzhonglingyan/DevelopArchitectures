@@ -1,4 +1,4 @@
-package com.yuntian.newsframe.ui.news.list.viewholder;
+package com.yuntian.newsframe.ui.news.list;
 
 import android.view.View;
 import android.widget.ImageView;
