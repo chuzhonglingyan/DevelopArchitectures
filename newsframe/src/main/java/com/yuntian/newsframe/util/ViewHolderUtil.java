@@ -11,6 +11,8 @@ import com.yuntian.newsframe.ui.ganhuo.list.WelfaseViewHolder;
 import com.yuntian.newsframe.ui.news.bean.NewsBean;
 import com.yuntian.newsframe.ui.news.list.NewsItemViewHolder01;
 import com.yuntian.newsframe.ui.news.list.NewsItemViewHolder02;
+import com.yuntian.newsframe.ui.video.bean.VideoInfo;
+import com.yuntian.newsframe.ui.video.list.VideoRestViewHolder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,8 +32,6 @@ public class ViewHolderUtil {
     public static final int ITEM_TYPE_GANK_REST = ITEM_TYPE_GANK_WELFARE+1;
 
 
-
-
     static {
 
         Map<Integer, ModeViewHolder> newsMap = new HashMap<>();
@@ -46,7 +46,7 @@ public class ViewHolderUtil {
         gankMap.put(ITEM_TYPE_GANK_REST, new ModeViewHolder(R.layout.item_gank_rest_list, RestViewHolder.class));
         ViewHolderManager.registerTypeClass(GankInfo.class, gankMap);
 
-
+        ViewHolderManager.registerTypeClass(VideoInfo.class,R.layout.item_video_rest_list, VideoRestViewHolder.class);
     }
 
     public static void init(){

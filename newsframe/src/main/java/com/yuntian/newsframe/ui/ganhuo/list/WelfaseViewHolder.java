@@ -1,14 +1,14 @@
 package com.yuntian.newsframe.ui.ganhuo.list;
 
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.yuntian.basecomponent.base.BaseBindingViewHolder;
 import com.yuntian.baselibs.glide.ImageLoaderUtil;
 import com.yuntian.newsframe.databinding.ItemGankWelfareListBinding;
 import com.yuntian.newsframe.ui.ganhuo.bean.GankInfo;
-
-import java.util.Random;
+import com.yuntian.newsframe.util.GankUitl;
 
 /**
  * description  .
@@ -16,25 +16,25 @@ import java.util.Random;
  */
 public class WelfaseViewHolder extends BaseBindingViewHolder<ItemGankWelfareListBinding, GankInfo> {
 
+    // 图片的宽度
+    private int mPhotoWidth;
 
     public WelfaseViewHolder(View itemView) {
         super(itemView);
+        int widthPixels = context.getResources().getDisplayMetrics().widthPixels;
+        mPhotoWidth = widthPixels / 2 - SizeUtils.dp2px(1);
     }
 
     @Override
     public void onBindViewData(GankInfo info, int pos) {
         mBinding.setGanWelfareItem(info);
 
-        LinearLayout.LayoutParams params= (LinearLayout.LayoutParams) mBinding.ivWelfareImg.getLayoutParams();
-        //设置高
-        Random random=new Random();
-        params.height=(100+random.nextInt(9)*50);
-        int picWidth=params.width;
-        int picHeight=params.height;
+        int photoHeight = GankUitl.calcPhotoHeight(info.getPixel(), mPhotoWidth);
+        // 返回的数据有像素分辨率，根据这个来缩放图片大小
+        final ViewGroup.LayoutParams params = mBinding.ivWelfareImg.getLayoutParams();
+        params.width = mPhotoWidth;
+        params.height = photoHeight;
         mBinding.ivWelfareImg.setLayoutParams(params);
-        //http://img.gank.io/90db2f35-2e9d-4d75-b5a9-53ee1719b57b
-        //此图我只需要 宽度：100 的图片，而无需原始图片，则在请求图片的参数上带上： ?imageView2/0/w/100 即可
-        //http://img.gank.io/6ade6383-bc8e-40e4-9919-605901ad0ca5?imageView2/0/w/100
         ImageLoaderUtil.displayImage(info.getUrl(),mBinding.ivWelfareImg);
     }
 

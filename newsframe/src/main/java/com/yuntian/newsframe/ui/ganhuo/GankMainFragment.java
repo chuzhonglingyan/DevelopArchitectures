@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 
 import com.yuntian.basecomponent.util.ToolBarUtil;
 import com.yuntian.basedragger2.inject.AppComponent;
+import com.yuntian.baselibs.adapter.BaseFPageAdapter;
 import com.yuntian.baselibs.util.FragmentHelper;
 import com.yuntian.newsframe.R;
 import com.yuntian.newsframe.databinding.FragmentGankMainBinding;
@@ -27,22 +28,23 @@ import static com.yuntian.newsframe.storage.AppConstants.GANK_WELFARE;
  */
 public class GankMainFragment extends GankViewFragment<FragmentGankMainBinding, GankContract.Presenter> {
 
-    public static final String TAG = "PhotoMainFragment";
+
+
+    protected BaseFPageAdapter baseFPageAdapter;
+
+
+    public static final String TAG = "GankMainFragment";
+
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_gank_main;
     }
 
-    @Override
-    protected void init() {
-        ToolBarUtil.initToolBar(mActivity, mViewBinding.toolBar, true, "图片");
-    }
-
 
     @Override
     protected void initView() {
-
+        ToolBarUtil.initToolBar(mActivity, mViewBinding.toolBar, true, "图片");
     }
 
     @Override
@@ -62,10 +64,13 @@ public class GankMainFragment extends GankViewFragment<FragmentGankMainBinding, 
         fragments.add(FragmentHelper.newInstance(WelfareListFragment.class,bundlearWelfare));
         fragments.add(FragmentHelper.newInstance(RestListFragment.class,bundleRest));
 
-        baseFPageAdapter.updateFragments(fragments,new String[]{"技术文章", "福利生活", "休息视频"});
 
+        //原因是：子fragment用父fragment的FragmentManager了，然后不会出来内容。
+        //解决方法：在初始化FragmentPagerAdapter的时候不要传入getFragmentManager(),
+        //而应该传入getChildFragmentManager()这个方法。
+        baseFPageAdapter=new BaseFPageAdapter(getChildFragmentManager(),fragments,new String[]{"技术文章", "福利生活", "休息视频"});
         mViewBinding.viewPager.setAdapter(baseFPageAdapter);
-        mViewBinding.tabLayout.setViewPager(mViewBinding.viewPager);
+        mViewBinding.tabLayout.setupWithViewPager(mViewBinding.viewPager);
     }
 
     @Override

@@ -2,8 +2,9 @@ include ':newsframe',
         ':basecomponent',
         ':downloaderLib',
         ':baselibs',
-        ':basedragger2'
-        //':dragger2databinding'
+        ':basedragger2',
+        ':app'
+//':dragger2databinding'
         //':mvpexample',
         //':mvvmexample'
-        //':app'
+

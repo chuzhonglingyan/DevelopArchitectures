@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.yuntian.adapterlib.base.BaseRvAdapter;
 import com.yuntian.adapterlib.listener.OnItemDataClickListenerImp;
 import com.yuntian.adapterlib.util.RecyclerViewUtil;
 import com.yuntian.basedragger2.inject.AppComponent;
@@ -18,11 +19,16 @@ import com.yuntian.newsframe.ui.ganhuo.mvp.GankViewFragment;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 import static com.yuntian.newsframe.storage.AppConstants.GANK_DATATYPE;
 
 public class WelfareListFragment extends GankViewFragment<FrgmentSmartListBinding, GankContract.Presenter> {
+
+    @Inject
+    BaseRvAdapter baseRvAdapter;
 
     private String dataType;
     private int startPage;
@@ -44,7 +50,6 @@ public class WelfareListFragment extends GankViewFragment<FrgmentSmartListBindin
     @Override
     protected void initView() {
         startPage = 0;
-
         RecyclerViewUtil.initRecyclerViewSV(mContext, mViewBinding.rv, true, baseRvAdapter,2);
         mViewBinding.rv.setItemAnimator(new SlideInUpAnimator());
         baseRvAdapter.setOnItemDataClickListener(new OnItemDataClickListenerImp() {
@@ -61,6 +66,8 @@ public class WelfareListFragment extends GankViewFragment<FrgmentSmartListBindin
         mViewBinding.refreshLayout.setOnLoadMoreListener((refreshlayout) -> {
             mPresenter.getWelfarePhotos(dataType,startPage);
         });
+
+
     }
 
     @Override
@@ -101,7 +108,7 @@ public class WelfareListFragment extends GankViewFragment<FrgmentSmartListBindin
             mViewBinding.refreshLayout.finishLoadMore();
         }
         if (result != null && result.size() > 0) {
-            startPage += 10;
+            startPage += 1;
         } else {
             mViewBinding.refreshLayout.finishLoadMoreWithNoMoreData();
         }
@@ -117,5 +124,8 @@ public class WelfareListFragment extends GankViewFragment<FrgmentSmartListBindin
                 .build()
                 .inject(this);  //调用inject，注入就完成了。此时使用@Inject来标记成员变量就可以使用了
     }
+
+
+
 
 }

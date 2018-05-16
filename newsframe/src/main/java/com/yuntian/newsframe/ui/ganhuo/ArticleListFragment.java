@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.yuntian.adapterlib.base.BaseRvAdapter;
 import com.yuntian.adapterlib.listener.OnItemDataClickListenerImp;
 import com.yuntian.adapterlib.util.RecyclerViewUtil;
 import com.yuntian.basedragger2.inject.AppComponent;
@@ -18,6 +19,8 @@ import com.yuntian.newsframe.ui.ganhuo.mvp.GankViewFragment;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 import static com.yuntian.newsframe.storage.AppConstants.GANK_DATATYPE;
@@ -26,6 +29,8 @@ public class ArticleListFragment extends GankViewFragment<FrgmentSmartListBindin
 
     private String dataType;
     private int startPage;
+    @Inject
+    BaseRvAdapter baseRvAdapter;
 
 
 
@@ -33,6 +38,7 @@ public class ArticleListFragment extends GankViewFragment<FrgmentSmartListBindin
     protected int getLayoutId() {
         return R.layout.frgment_smart_list;
     }
+
 
 
     @Override
@@ -44,8 +50,7 @@ public class ArticleListFragment extends GankViewFragment<FrgmentSmartListBindin
     @Override
     protected void initView() {
         startPage = 0;
-
-        RecyclerViewUtil.initRecyclerViewV(mContext, mViewBinding.rv, true, baseRvAdapter);
+        RecyclerViewUtil.initRecyclerViewV(mContext, mViewBinding.rv, false, baseRvAdapter);
         mViewBinding.rv.setItemAnimator(new SlideInUpAnimator());
         baseRvAdapter.setOnItemDataClickListener(new OnItemDataClickListenerImp() {
             @Override
@@ -101,7 +106,7 @@ public class ArticleListFragment extends GankViewFragment<FrgmentSmartListBindin
             mViewBinding.refreshLayout.finishLoadMore();
         }
         if (result != null && result.size() > 0) {
-            startPage += 10;
+            startPage += 1;
         } else {
             mViewBinding.refreshLayout.finishLoadMoreWithNoMoreData();
         }

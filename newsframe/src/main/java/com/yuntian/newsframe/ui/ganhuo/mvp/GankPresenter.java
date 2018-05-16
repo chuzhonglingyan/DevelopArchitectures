@@ -33,7 +33,7 @@ public class GankPresenter extends GankContract.Presenter {
 
                     @Override
                     protected void _onError(String message, int code) {
-
+                        mView.showMsg(message,code);
                     }
                 });
     }

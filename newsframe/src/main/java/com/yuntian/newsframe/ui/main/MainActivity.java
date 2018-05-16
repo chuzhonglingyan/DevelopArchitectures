@@ -18,7 +18,7 @@ import com.yuntian.baselibs.util.FragmentHelper;
 import com.yuntian.newsframe.R;
 import com.yuntian.newsframe.databinding.ActivityMainBinding;
 import com.yuntian.newsframe.storage.AppConstants;
-import com.yuntian.newsframe.ui.movie.MoiveMainFragment;
+import com.yuntian.newsframe.ui.video.VideoMainFragment;
 import com.yuntian.newsframe.ui.news.NewsMainFragment;
 import com.yuntian.newsframe.ui.ganhuo.GankMainFragment;
 
@@ -101,8 +101,8 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> i
         switch (position) {
             //新闻
             case R.id.nav_news:
-                FragmentHelper.addHideShowFragment(this, fragmentList, NewsMainFragment.class, R.id.fl_container, NewsMainFragment.TAG);
                 stackTabs.clear();
+                FragmentHelper.addHideShowFragment(this, fragmentList, NewsMainFragment.class, R.id.fl_container, NewsMainFragment.TAG);
                 addToStack(R.id.nav_news);
                 break;
             //图片
@@ -112,7 +112,7 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> i
                 break;
             //视频
             case R.id.nav_videos:
-                FragmentHelper.addHideShowFragment(this, fragmentList, MoiveMainFragment.class, R.id.fl_container, MoiveMainFragment.TAG);
+                FragmentHelper.addHideShowFragment(this, fragmentList, VideoMainFragment.class, R.id.fl_container, VideoMainFragment.TAG);
                 addToStack(R.id.nav_videos);
                 break;
             //设置
@@ -136,9 +136,9 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> i
         } else {
             final int tabId = stackTabs.get(stackEntryCount - 2);
             mViewBinding.navView.setCheckedItem(tabId);
+            stackTabs.pop();
             switchTo(tabId);
             mItemId = tabId;
-            stackTabs.pop();
         }
     }
 

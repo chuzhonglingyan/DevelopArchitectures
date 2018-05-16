@@ -7,7 +7,6 @@ import android.text.TextUtils;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.cache.ExternalCacheDiskCacheFactory;
 import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
 
 import java.io.File;
@@ -113,16 +112,16 @@ public class GlideCacheUtil {
     public void clearImageAllCache(String catchDir) {
         clearImageDiskCache();
         clearImageMemoryCache();
-        //清除gilde原来的文件夹
-        if (mContext.getExternalCacheDir() != null) {
-            String ImageExternalCatchDir = mContext.getExternalCacheDir() + ExternalCacheDiskCacheFactory.DEFAULT_DISK_CACHE_DIR;
-            deleteFolderFile(ImageExternalCatchDir, true);
-        }
-        if (mContext.getCacheDir() != null) {
-            String ImageInternalCacheDisk = mContext.getCacheDir() + File.separator + InternalCacheDiskCacheFactory.DEFAULT_DISK_CACHE_DIR;
-            deleteFolderFile(ImageInternalCacheDisk, true);
-        }
-        deleteFolderFile(catchDir, true);
+//        //清除gilde原来的文件夹
+//        if (mContext.getExternalCacheDir() != null) {
+//            String ImageExternalCatchDir = mContext.getExternalCacheDir() + ExternalCacheDiskCacheFactory.DEFAULT_DISK_CACHE_DIR;
+//            deleteFolderFile(ImageExternalCatchDir, true);
+//        }
+//        if (mContext.getCacheDir() != null) {
+//            String ImageInternalCacheDisk = mContext.getCacheDir() + File.separator + InternalCacheDiskCacheFactory.DEFAULT_DISK_CACHE_DIR;
+//            deleteFolderFile(ImageInternalCacheDisk, true);
+//        }
+//        deleteFolderFile(catchDir, true);
     }
 
     /**
@@ -132,14 +131,14 @@ public class GlideCacheUtil {
         clearImageDiskCache();
         clearImageMemoryCache();
         //清除gilde原来的文件夹
-        if (mContext.getExternalCacheDir() != null) {
-            String ImageExternalCatchDir = mContext.getExternalCacheDir() + ExternalCacheDiskCacheFactory.DEFAULT_DISK_CACHE_DIR;
-            deleteFolderFile(ImageExternalCatchDir, true);
-        }
-        if (mContext.getCacheDir() != null) {
-            String ImageInternalCacheDisk = mContext.getCacheDir() + File.separator + InternalCacheDiskCacheFactory.DEFAULT_DISK_CACHE_DIR;
-            deleteFolderFile(ImageInternalCacheDisk, true);
-        }
+//        if (mContext.getExternalCacheDir() != null) {
+//            String ImageExternalCatchDir = mContext.getExternalCacheDir() + ExternalCacheDiskCacheFactory.DEFAULT_DISK_CACHE_DIR;
+//            deleteFolderFile(ImageExternalCatchDir, true);
+//        }
+//        if (mContext.getCacheDir() != null) {
+//            String ImageInternalCacheDisk = mContext.getCacheDir() + File.separator + InternalCacheDiskCacheFactory.DEFAULT_DISK_CACHE_DIR;
+//            deleteFolderFile(ImageInternalCacheDisk, true);
+//        }
     }
 
 

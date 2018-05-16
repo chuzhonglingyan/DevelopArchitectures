@@ -18,4 +18,8 @@ public class AppConstants {
     public static final String GANK_REST = "休息视频";
 
 
+    public static final String VIDEO_ID_KEY = "VideoIdKey";
+    public static final String VIDEO_TYPE_KEY = "VideoTypeKey";
+
+
 }

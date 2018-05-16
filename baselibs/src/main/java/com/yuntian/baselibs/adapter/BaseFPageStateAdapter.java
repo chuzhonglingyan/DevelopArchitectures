@@ -114,6 +114,18 @@ public class BaseFPageStateAdapter extends FragmentStatePagerAdapter {
         }
     }
 
+
+    /**
+     * 刷新fragment
+     * @param fragments
+     * @param mTitles
+     */
+    public void updateFragments( List<Fragment> fragments, String[] mTitles) {
+           updateFragments(fragments,toList(mTitles));
+    }
+
+
+
     /**
      * 刷新fragment
      * @param fragments

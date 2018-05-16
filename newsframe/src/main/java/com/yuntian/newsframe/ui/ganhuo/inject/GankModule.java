@@ -61,6 +61,13 @@ public class GankModule {
         return new BaseFPageStateAdapter(getFragmentActivty());
     }
 
+    @ActivityScope
+    @Provides
+    BaseFPageAdapter provideBaseFPageAdapter() {
+        return new BaseFPageAdapter(getFragmentActivty());
+    }
+
+
     public FragmentActivity getFragmentActivty() {
         if (view instanceof FragmentActivity) {
             return (FragmentActivity) view;
@@ -70,10 +77,5 @@ public class GankModule {
         return null;
     }
 
-    @ActivityScope
-    @Provides
-    BaseFPageAdapter provideBaseFPageAdapter() {
-        return new BaseFPageAdapter(getFragmentActivty());
-    }
 
 }

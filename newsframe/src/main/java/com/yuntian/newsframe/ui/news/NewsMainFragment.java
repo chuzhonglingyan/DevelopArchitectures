@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import com.yuntian.basecomponent.util.TabLayoutUtils;
 import com.yuntian.basecomponent.util.ToolBarUtil;
 import com.yuntian.basedragger2.inject.AppComponent;
+import com.yuntian.baselibs.adapter.BaseFPageStateAdapter;
 import com.yuntian.baselibs.util.FragmentHelper;
 import com.yuntian.newsframe.R;
 import com.yuntian.newsframe.databinding.FragmentNewsMainBinding;
@@ -31,6 +32,8 @@ public class NewsMainFragment extends NewsViewFragment<FragmentNewsMainBinding, 
     public static final String TAG = "NewsMainFragment";
 
 
+    private BaseFPageStateAdapter baseFPageStateAdapter;
+
     private int isVisablePos = 0;
 
     @Override
@@ -55,7 +58,7 @@ public class NewsMainFragment extends NewsViewFragment<FragmentNewsMainBinding, 
             bundle.putString(AppConstants.NEWS_TYPE, bean.getNewsChannelType());
             fragments.add(FragmentHelper.newInstance(NewsListFragment.class, bundle));
         }
-        baseFPageStateAdapter.updateFragments(fragments, titles);
+        baseFPageStateAdapter=new BaseFPageStateAdapter(getChildFragmentManager(),fragments, titles);//嵌套fragment问题
         mViewBinding.viewPager.setAdapter(baseFPageStateAdapter);
         mViewBinding.tabLayout.setupWithViewPager(mViewBinding.viewPager);
         //tab切换时不会调用onResmue方法，会调用setUserVisiable方法

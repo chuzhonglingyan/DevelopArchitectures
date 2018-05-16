@@ -13,14 +13,13 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Path;
 
+import static com.yuntian.newsframe.storage.ApiConstants.AVOID_HTTP403_FORBIDDEN;
+
 /**
  * description  .
  * Created by ChuYingYan on 2018/5/4.
  */
 public interface NewsService {
-
-    // 避免出现 HTTP 403 Forbidden，参考：http://stackoverflow.com/questions/13670692/403-forbidden-with-java-but-not-web-browser
-    String AVOID_HTTP403_FORBIDDEN = "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11";
 
 
     @Headers(AVOID_HTTP403_FORBIDDEN)

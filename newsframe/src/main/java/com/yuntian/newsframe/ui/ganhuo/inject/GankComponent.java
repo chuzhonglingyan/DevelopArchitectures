@@ -18,6 +18,7 @@ import dagger.Component;
 @Component(modules = GankModule.class, dependencies = AppComponent.class)
 public interface GankComponent {
 
+
     void inject(GankMainFragment fragment);
 
     void inject(WelfareListFragment fragment);

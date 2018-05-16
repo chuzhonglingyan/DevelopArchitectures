@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.yuntian.adapterlib.base.BaseRvAdapter;
 import com.yuntian.adapterlib.listener.OnItemDataClickListenerImp;
 import com.yuntian.adapterlib.util.RecyclerViewUtil;
 import com.yuntian.basedragger2.inject.AppComponent;
@@ -17,12 +18,20 @@ import com.yuntian.newsframe.ui.news.mvp.NewsViewFragment;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 import static com.yuntian.newsframe.storage.AppConstants.NEWS_ID;
 import static com.yuntian.newsframe.storage.AppConstants.NEWS_TYPE;
 
 public class NewsListFragment extends NewsViewFragment<FrgmentSmartListBinding, NewsContract.Presenter> {
+
+
+
+    @Inject
+    BaseRvAdapter baseRvAdapter;
+
 
 
     private String mNewsId;
@@ -53,6 +62,8 @@ public class NewsListFragment extends NewsViewFragment<FrgmentSmartListBinding, 
         mViewBinding.refreshLayout.setOnLoadMoreListener((refreshlayout) -> {
             mPresenter.getNewsList(mNewsType, mNewsId, startPage);
         });
+
+        LogUtils.d("baseRvAdapter="+baseRvAdapter.toString());
     }
 
     @Override

@@ -21,11 +21,18 @@ public abstract class BaseLazyBindingFragment<B extends ViewDataBinding> extends
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (isCache && rootView != null) {
+            return rootView;
+        }
         mViewBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
         rootView=mViewBinding.getRoot();
         isInitialized=true;
+        init();
+        initView();
+        initData(savedInstanceState);
         return rootView;
     }
+
 
 
 }

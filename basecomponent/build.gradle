@@ -45,6 +45,9 @@ dependencies {
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-3'
     api 'com.github.chuzhonglinyan:adapterlib:1.0.1'
 
+
+    //api 'com.yqritc:recyclerview-flexibledivider:1.4.0'
+
     api project(':baselibs')
 
 }

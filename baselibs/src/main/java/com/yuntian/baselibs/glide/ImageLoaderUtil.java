@@ -3,9 +3,11 @@ package com.yuntian.baselibs.glide;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.DrawableRes;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.Utils;
 import com.bumptech.glide.BitmapRequestBuilder;
 import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.GifRequestBuilder;
@@ -13,8 +15,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BaseTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.signature.StringSignature;
 import com.yuntian.baselibs.R;
+
+import java.io.File;
+import java.util.concurrent.ExecutionException;
 
 
 public class ImageLoaderUtil {
@@ -343,4 +349,23 @@ public class ImageLoaderUtil {
         }
         return mContext;
     }
+
+    /**
+     * 计算图片分辨率
+     *
+     * @param url
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public static String calePhotoSize( String url) throws ExecutionException, InterruptedException {
+        File file = Glide.with(Utils.getApp()).load(url)
+                .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+        return options.outWidth + "*" + options.outHeight;
+    }
+
 }

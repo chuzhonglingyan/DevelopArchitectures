@@ -16,9 +16,8 @@ import com.blankj.utilcode.util.LogUtils;
 public abstract class BaseLazyFragment extends BaseFragment {
 
     protected boolean isVisible = false;
-
     protected boolean hasLoad = false;
-    private boolean isCache = false;
+    protected boolean isCache = false;
     protected boolean isInitialized = false;
     private boolean isPrepared = true;
 
@@ -57,15 +56,15 @@ public abstract class BaseLazyFragment extends BaseFragment {
             return rootView;
         }
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        isInitialized = true;
+        init();
+        initView();
+        initData(savedInstanceState);
         return view;
     }
 
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         if (isVisible && isPrepared) {
             lazyLoad();
             isPrepared = false;
@@ -82,10 +81,11 @@ public abstract class BaseLazyFragment extends BaseFragment {
         if (isInitialized && !hasLoad) { //第一个fragment有点特殊，没初始化就true
             LogUtils.d("lazy加载开始" + ",args:" + args.toString());
             lazyLoad();
-            hasLoad = true;
         } else {
-            if (isInitialized) {
-                LogUtils.d("lazy已经加载：hasLoad=" + hasLoad + ",args:" + args.toString());
+            if (hasLoad) {
+                LogUtils.d("lazy已经加载成功：hasLoad=" + hasLoad + ",args:" + args.toString());
+            }else {
+                lazyLoad();
             }
         }
     }
@@ -94,7 +94,6 @@ public abstract class BaseLazyFragment extends BaseFragment {
      * 不可见
      */
     protected void onInvisible() {
-
 
     }
 

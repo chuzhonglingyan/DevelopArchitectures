@@ -27,7 +27,6 @@ public abstract class BaseFragment extends Fragment {
     protected Bundle args;
 
     protected boolean isCreate = false; //fragment创建了
-
     protected boolean isViewInitialized = false; //view初始化了
 
 
@@ -62,7 +61,6 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         rootView = inflater.inflate(getLayoutId(), container, false);
         isViewInitialized = true;
         return rootView;
@@ -132,14 +130,12 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         isCreate = false;
-
     }
 
 
     @Override
     public void onDetach() {
         super.onDetach();
-
     }
 
 

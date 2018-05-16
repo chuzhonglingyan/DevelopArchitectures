@@ -1,20 +1,22 @@
-package com.yuntian.newsframe.storage.table;
+package com.yuntian.newsframe.ui.video.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.dl7.downloaderlib.model.DownloadStatus;
+import com.yuntian.adapterlib.base.TypeInterface;
+import com.yuntian.newsframe.util.ViewHolderUtil;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by long on 2016/10/11.
  * 视频实体
  */
 @Entity
-public class VideoInfo implements Parcelable {
+public class VideoInfo implements Parcelable ,TypeInterface{
 
     /**
      * mp4Hd_url : http://flv2.bn.netease.com/videolib3/1501/28/wlncJ2098/HD/wlncJ2098-mobile.mp4
@@ -272,9 +274,9 @@ public class VideoInfo implements Parcelable {
 
     @Generated(hash = 1048022349)
     public VideoInfo(String vid, String mp4Hd_url, String cover, String title, String sectiontitle,
-                     String mp4_url, int length, String m3u8Hd_url, String ptime, String m3u8_url,
-                     String videoUrl, long totalSize, long loadedSize, int downloadStatus, long downloadSpeed,
-                     boolean isCollect) {
+            String mp4_url, int length, String m3u8Hd_url, String ptime, String m3u8_url,
+            String videoUrl, long totalSize, long loadedSize, int downloadStatus, long downloadSpeed,
+            boolean isCollect) {
         this.vid = vid;
         this.mp4Hd_url = mp4Hd_url;
         this.cover = cover;
@@ -292,6 +294,8 @@ public class VideoInfo implements Parcelable {
         this.downloadSpeed = downloadSpeed;
         this.isCollect = isCollect;
     }
+
+   
 
 
     public static final Creator<VideoInfo> CREATOR = new Creator<VideoInfo>() {
@@ -330,4 +334,13 @@ public class VideoInfo implements Parcelable {
     public void setIsCollect(boolean isCollect) {
         this.isCollect = isCollect;
     }
+
+
+
+    @Override
+    public int getViewType() {
+        return ViewHolderUtil.getViewType(VideoInfo.class,0);
+    }
+
+
 }

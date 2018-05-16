@@ -2,7 +2,6 @@ package com.yuntian.basedragger2.base;
 
 import android.databinding.ViewDataBinding;
 
-import com.yuntian.adapterlib.base.BaseRvAdapter;
 import com.yuntian.basecomponent.base.BaseLazyBindingFragment;
 import com.yuntian.basedragger2.inject.AppComponent;
 import com.yuntian.basedragger2.mvp.BasePresenter;
@@ -16,10 +15,6 @@ import javax.inject.Inject;
  */
 public abstract class BaseMvpFrgament<P extends BasePresenter, B extends ViewDataBinding> extends BaseLazyBindingFragment<B> implements BaseView {
 
-
-
-    @Inject
-    protected BaseRvAdapter baseRvAdapter;
 
 
     @Inject

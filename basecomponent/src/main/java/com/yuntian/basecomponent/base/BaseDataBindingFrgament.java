@@ -28,4 +28,5 @@ public abstract class BaseDataBindingFrgament<B extends ViewDataBinding> extends
     }
 
 
+
 }

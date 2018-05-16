@@ -19,6 +19,8 @@ package com.yuntian.newsframe.ui.ganhuo.bean;
 import com.yuntian.adapterlib.base.TypeInterface;
 import com.yuntian.newsframe.util.ViewHolderUtil;
 
+import java.util.List;
+
 public class GankInfo implements TypeInterface{
     /**
      * _id : 57a4056c421aa91e2606478d
@@ -41,6 +43,39 @@ public class GankInfo implements TypeInterface{
     private String url;
     private boolean used;
     private String who;
+
+    // 保存图片宽高
+    private String pixel;
+
+    private String videoImage;
+
+
+    public String getVideoImage() {
+        return videoImage;
+    }
+
+    public void setVideoImage(String videoImage) {
+        this.videoImage = videoImage;
+    }
+
+    private List<String> images;
+
+    public String getPixel() {
+        return pixel;
+    }
+
+    public void setPixel(String pixel) {
+        this.pixel = pixel;
+    }
+
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
 
     public String get_id() {
         return _id;

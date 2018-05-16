@@ -1,6 +1,5 @@
 package com.yuntian.newsframe.net;
 
-import com.yuntian.baselibs.net.cache.CacheStrategy;
 import com.yuntian.baselibs.net.entity.rep.BaseResponse;
 import com.yuntian.newsframe.ui.ganhuo.bean.GankInfo;
 
@@ -8,7 +7,6 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.Path;
 
 /**
@@ -24,14 +22,7 @@ public interface GankService {
      * @param page 页码
      * @return
      */
-    @Headers(CacheStrategy.CACHE_CONTROL_AGE)
-    @GET("http://gank.io/api/data/{dataType}/{10}/{page}")
-    Observable<BaseResponse<List<GankInfo>>> getWelfarePhotos(@Path("page") String dataType, @Path("page") int page);
-
-
-    @Headers(CacheStrategy.CACHE_CONTROL_AGE)
-    @GET("http://gank.io/api/data/{dataType}/{10}/{page}")
-    Observable<BaseResponse<List<GankInfo>>> getArticle(@Path("page") String dataType, @Path("page") int page);
-
+    @GET("http://gank.io/api/data/{dataType}/10/{page}")
+    Observable<BaseResponse<List<GankInfo>>> getWelfarePhotos(@Path("dataType") String dataType, @Path("page") int page);
 
 }

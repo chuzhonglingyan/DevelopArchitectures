@@ -23,6 +23,7 @@ public class BaseFPageAdapter extends FragmentPagerAdapter {
     private FragmentManager fragmentManager;
 
 
+
     public BaseFPageAdapter(FragmentActivity fragmentActivity) {
         super(fragmentActivity.getSupportFragmentManager());
         fragmentManager = fragmentActivity.getSupportFragmentManager();
