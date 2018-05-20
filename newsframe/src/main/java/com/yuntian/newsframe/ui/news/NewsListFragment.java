@@ -46,7 +46,7 @@ public class NewsListFragment extends NewsViewFragment<FrgmentSmartListBinding, 
     @Override
     protected void initView() {
         startPage = 0;
-        RecyclerViewUtil.initRecyclerViewV(mContext, mViewBinding.rv, true, baseRvAdapter);
+        RecyclerViewUtil.initRecyclerViewV(mViewBinding.rv,  baseRvAdapter,true);
         mViewBinding.rv.setItemAnimator(new SlideInUpAnimator());
         baseRvAdapter.setOnItemDataClickListener(new OnItemDataClickListenerImp() {
             @Override

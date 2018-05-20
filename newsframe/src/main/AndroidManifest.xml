@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:name=".base.NewFrameApp"
         android:theme="@style/AppTheme">
+
+        <meta-data android:name="android.max_aspect" android:value="2.1" />
+
         <activity
             android:name=".ui.main.MainActivity"
             android:label="@string/title_activity_main"
@@ -22,6 +25,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".base.NewFrameWebViewActvity"
+            android:theme="@style/AppTheme">
         </activity>
     </application>
 

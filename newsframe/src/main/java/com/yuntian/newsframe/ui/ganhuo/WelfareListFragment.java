@@ -50,7 +50,7 @@ public class WelfareListFragment extends GankViewFragment<FrgmentSmartListBindin
     @Override
     protected void initView() {
         startPage = 0;
-        RecyclerViewUtil.initRecyclerViewSV(mContext, mViewBinding.rv, true, baseRvAdapter,2);
+        RecyclerViewUtil.initRecyclerViewSV(mViewBinding.rv, baseRvAdapter,2);
         mViewBinding.rv.setItemAnimator(new SlideInUpAnimator());
         baseRvAdapter.setOnItemDataClickListener(new OnItemDataClickListenerImp() {
             @Override

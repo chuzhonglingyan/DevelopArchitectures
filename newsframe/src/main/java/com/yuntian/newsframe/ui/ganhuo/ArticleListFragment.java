@@ -50,7 +50,7 @@ public class ArticleListFragment extends GankViewFragment<FrgmentSmartListBindin
     @Override
     protected void initView() {
         startPage = 0;
-        RecyclerViewUtil.initRecyclerViewV(mContext, mViewBinding.rv, false, baseRvAdapter);
+        RecyclerViewUtil.initRecyclerViewV(mViewBinding.rv, baseRvAdapter);
         mViewBinding.rv.setItemAnimator(new SlideInUpAnimator());
         baseRvAdapter.setOnItemDataClickListener(new OnItemDataClickListenerImp() {
             @Override

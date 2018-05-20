@@ -7,6 +7,8 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 /**
  * description Activity基类 .
  * Created by ChuYingYan on 2018/4/28.
@@ -21,6 +23,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
+        mActivity = this;
+        ARouter.getInstance().inject(this);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);  // 设置竖屏
+
         init();
         initView();
         initData(savedInstanceState);
@@ -58,9 +65,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void init() {
-        mContext = this;
-        mActivity = this;
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);  // 设置竖屏
         setContentView(getLayoutId());
     }
 
@@ -69,6 +73,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void initView();
 
     protected abstract void initData(Bundle savedInstanceState);
+
 
 
     @Override

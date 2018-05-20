@@ -35,15 +35,35 @@ public class VideoRestViewHolder extends BaseBindingViewHolder<ItemVideoRestList
                 .setLockLand(true)
                 .setPlayTag(TAG)
                 .setShowFullAnimation(true)
-                .setNeedLockFull(true)
+                .setNeedLockFull(true);
+
+    }
+
+    @Override
+    public void onBindViewData(VideoInfo info, int pos) {
+        mBinding.setVideoInfoItem(info);
+
+
+        //增加封面
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+        ImageLoaderUtil.displayImage(info.getCover(), imageView);
+        if (imageView.getParent() != null) {
+            ViewGroup viewGroup = (ViewGroup) imageView.getParent();
+            viewGroup.removeView(imageView);
+        }
+
+        //防止错位，离开释放
+        //gsyVideoPlayer.initUIState();
+        gsyVideoOptionBuilder
                 .setVideoAllCallBack(new GSYSampleCallBack() {
                     @Override
                     public void onPrepared(String url, Object... objects) {
                         super.onPrepared(url, objects);
-                        if (!mBinding.videoItemPlayer.isIfCurrentIsFullscreen()) {
-                            //静音
-                            GSYVideoManager.instance().setNeedMute(true);
-                        }
+//                        if (!mBinding.videoItemPlayer.isIfCurrentIsFullscreen()) {
+//                            //静音
+//                            GSYVideoManager.instance().setNeedMute(true);
+//                        }
                     }
 
                     @Override
@@ -56,29 +76,10 @@ public class VideoRestViewHolder extends BaseBindingViewHolder<ItemVideoRestList
                     @Override
                     public void onEnterFullscreen(String url, Object... objects) {
                         super.onEnterFullscreen(url, objects);
-                        GSYVideoManager.instance().setNeedMute(false);
+                        //GSYVideoManager.instance().setNeedMute(false);
                         mBinding.videoItemPlayer.getCurrentPlayer().getTitleTextView().setText((String) objects[0]);
                     }
-                });
-    }
-
-    @Override
-    public void onBindViewData(VideoInfo info, int pos) {
-        mBinding.setVideoInfoItem(info);
-
-
-        //增加封面
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-        ImageLoaderUtil.displayImage(info.getCover(),imageView);
-        if (imageView.getParent() != null) {
-            ViewGroup viewGroup = (ViewGroup) imageView.getParent();
-            viewGroup.removeView(imageView);
-        }
-
-        //防止错位，离开释放
-        //gsyVideoPlayer.initUIState();
-        gsyVideoOptionBuilder
+                })
                 .setThumbImageView(imageView)
                 .setUrl(info.getMp4_url())
                 .setVideoTitle(info.getTitle())
