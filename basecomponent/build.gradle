@@ -50,9 +50,7 @@ dependencies {
     api 'com.github.chuzhonglinyan:adapterlib:1.0.2'
 
     // html text
-    api ('com.zzhoujay.richtext:richtext:2.0.9'){
-        exclude group: 'com.android.support', module: 'support-v7'
-    }
+    api 'com.zzhoujay.richtext:richtext:2.0.9'
     //api 'com.yqritc:recyclerview-flexibledivider:1.4.0'
     // photoview
     api 'com.github.chrisbanes.photoview:library:1.2.4'
